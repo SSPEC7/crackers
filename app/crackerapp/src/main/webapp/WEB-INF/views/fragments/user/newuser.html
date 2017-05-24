@@ -1,0 +1,38 @@
+<!-- 
+===========================================
+#  auther: RITESH SINGH                   #
+#  this file contains example for angular #
+#                                         #
+===========================================
+ -->
+
+<!DOCTYPE div PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<div th:replace="commonComponent :: commonCss"></div>
+</head>
+<body ng-app="userApp">
+	<div th:replace="partialComponent :: _header"></div>
+	<div class="container" ng-controller="SpaCtrl">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="error-template">
+					Cooler <span>{{$data.pageTitle}}</span>
+				</div>
+				<!-- this is use in case of $route -->
+				<div ng-view></div>
+				<!-- this is use in case of $state -->
+				<div ui-view></div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-4"><div ui-view="header"></div></div>
+			<div class="col-sm-4"><div ui-view="content"></div></div>
+			<div class="col-sm-4"><div ui-view="footer"></div></div>
+		</div>
+	</div>
+	<div th:replace="partialComponent :: _footer"></div>
+</body>
+<div th:replace="commonComponent :: angulerMvc"></div>
+<div th:replace="userComponent :: angulerMvc"></div>
+</html>
