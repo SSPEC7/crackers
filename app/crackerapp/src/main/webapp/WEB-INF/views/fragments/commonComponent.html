@@ -7,35 +7,48 @@
  -->
 <div th:fragment="commonCss">
 
-	<meta name="viewport" content="width=device-width, initial-scale=1" >
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" type="text/css"
 		th:href="@{/resources/angular/css/bootstrap.min.css}"
 		href="/resources/angular/css/bootstrap.min.css" />
-	<!-- ================Material Design============================ -->	
+	<!-- ================Material Design============================ -->
 	<link rel="stylesheet" type="text/css"
 		th:href="@{/resources/material/mdl/material.min.css}"
 		href="/resources/material/mdl/material.min.css" />
-	
-	<link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">	
-	
+
+	<link rel="stylesheet" type="text/css"
+		th:href="@{/resources/angular/css/header.css}"
+		href="/resources/angular/css/header.css" />
+
+	<link rel="stylesheet"
+		href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
+
 	<link rel="stylesheet" type="text/css"
 		th:href="@{/resources/material/mdl/icon.css}"
-		href="/resources/material/mdl/icon.css" />	
-	
+		href="/resources/material/mdl/icon.css" />
+
 	<!-- ================Material Design============================ -->
-	
+
 	<link rel="stylesheet" type="text/css"
 		th:href="@{/resources/angular/css/font-awesome.min.css}"
 		href="/resources/angular/css/font-awesome.min.css" />
-	
+
 	<link rel="stylesheet" type="text/css"
 		th:href="@{/resources/angular/css/fontscss.css}"
 		href="/resources/angular/css/fontscss.css" />
-		
+
 	<link rel="stylesheet" type="text/css"
 		th:href="@{/resources/angular/css/animate/animate.min.css}"
-		href="/resources/angular/css/animate/animate.min.css" />	
-		
+		href="/resources/angular/css/animate/animate.min.css" />
+
+	<link rel="stylesheet" type="text/css"
+		th:href="@{/resources/material/customMaterial.css}"
+		href="/resources/material/customMaterial.css" />
+
+	<link rel="stylesheet" type="text/css"
+		th:href="@{/resources/material/mdl/fontstyling.css}"
+		href="/resources/material/mdl/fontstyling.css" />
+
 </div>
 
 <div th:fragment="angulerMvc">
@@ -47,21 +60,53 @@
 	<script type="text/javascript"
 		th:src="@{/resources/angular/js/angular-1.4.4.min.js}"
 		src="/resources/angular/js/angular-1.4.4.min.js"></script>
-	
+
 	<script type="text/javascript"
 		th:src="@{/resources/angular/js/angular-ui-router.min.js}"
 		src="/resources/angular/js/angular-ui-router.min.js"></script>
-		
+
 	<script type="text/javascript"
 		th:src="@{/resources/angular/js/angular-route-1.4.4.min.js}"
 		src="/resources/angular/js/angular-route-1.4.4.min.js"></script>
-	
+
 	<script type="text/javascript"
 		th:src="@{/resources/angular/js/angular-resource-1.4.4.min.js}"
 		src="/resources/angular/js/angular-resource-1.4.4.min.js"></script>
-	
+
 	<script type="text/javascript"
 		th:src="@{/resources/angular-mvc/js/views/_common.js}"
 		src="/resources/angular-mvc/js/views/_common.js"></script>
-	
+
 </div>
+
+
+<div th:fragment="header" class="row mdl-shadow--2dp header-formatter">
+	<div class="col-sm-3 col-xs-3 col-md-3 header-logo ">
+		<img alt="" class="img-header-logo"
+			th:src="@{/resources/angular/image/logo.png}">
+	</div>
+	<div class="col-sm-7 col-xs-7 col-md-7 header-search">
+		<div class="row">
+			<div class="col-sm-6" role="search-box">
+				<div id="custom-search-input">
+					<div class="input-group col-md-12">
+						<input type="text" class="  search-query form-control"
+							placeholder="Search" /> <span class="input-group-btn">
+							<button class="btn btn-info" type="button">
+								<i class="material-icons">search</i>
+							</button>
+						</span>
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-6">
+			</div>
+		</div>
+	</div>
+	<div class="col-sm-1 col-xs-1 col-md-1 header-pie"></div>
+	<div class="col-sm-1 col-xs-1 col-md-1 header-pie-right">
+		<a href="#" class="material-icons md-36 md-inactive md-light-custom">apps</a>
+	</div>
+</div>
+
+
