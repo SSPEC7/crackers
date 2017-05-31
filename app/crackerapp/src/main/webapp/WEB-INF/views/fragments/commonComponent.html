@@ -30,10 +30,6 @@
 	<!-- ================Material Design============================ -->
 
 	<link rel="stylesheet" type="text/css"
-		th:href="@{/resources/angular/css/font-awesome.min.css}"
-		href="/resources/angular/css/font-awesome.min.css" />
-
-	<link rel="stylesheet" type="text/css"
 		th:href="@{/resources/angular/css/fontscss.css}"
 		href="/resources/angular/css/fontscss.css" />
 
@@ -48,6 +44,10 @@
 	<link rel="stylesheet" type="text/css"
 		th:href="@{/resources/material/mdl/fontstyling.css}"
 		href="/resources/material/mdl/fontstyling.css" />
+
+	<link rel="stylesheet" type="text/css"
+		th:href="@{/resources/angular/css/font-awesome.min.css}"
+		href="/resources/angular/css/font-awesome.min.css" />
 
 </div>
 
@@ -76,6 +76,14 @@
 	<script type="text/javascript"
 		th:src="@{/resources/angular-mvc/js/views/_common.js}"
 		src="/resources/angular-mvc/js/views/_common.js"></script>
+	
+	<script type="text/javascript"
+		th:src="@{/resources/angular/js/jquery.min.js}"
+		src="/resources/angular/js/jquery.min.js"></script>
+		
+	<script type="text/javascript"
+		th:src="@{/resources/angular/js/bootstrap.min.js}"
+		src="/resources/angular/js/bootstrap.min.js"></script>			
 
 </div>
 
@@ -99,13 +107,149 @@
 					</div>
 				</div>
 			</div>
-			<div class="col-sm-6">
+			<div class="col-sm-8 col-xs-6 col-md-6" >
+				<div class="row" role="login-signup">
+					<div class="col-sm-6 btn-login-signup">
+						<button id="signup-layout" class="mdl-button mdl-js-button button-fed-white background-color"
+						data-toggle="modal" data-target="#signupLayoutModal"
+						>
+							<i class="material-icons">person_add</i>  
+						</button>
+						<!-- ==========================Sign-up Layout============================= -->
+						  <div class="modal fade" id="signupLayoutModal" role="dialog">
+						    <div class="modal-dialog modal-sm ">
+						      <div class="modal-content">
+						        <div class="modal-header header-login-signup-layout">
+						          <button type="button" class="close" data-dismiss="modal">&times;</button>
+						          <h4 class="modal-title">Signup</h4>
+						        </div>
+						        <div class="modal-body">
+						          <p>This is a small modal.</p>
+						        </div>
+						        <div class="modal-footer">
+						          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+						        </div>
+						      </div>
+						    </div>
+						  </div>
+						<!-- ==========================Sign-up Layout Done============================= -->
+						<button id="login-layout"
+						        class="mdl-button mdl-js-button button-fed-white background-color"
+						       data-toggle="modal" data-target="#loginLayoutModal"
+						        >
+						  <i class="material-icons">input</i>
+						</button>
+						<!-- ==========================Login Layout Done============================= -->
+						  <div class="modal fade" id="loginLayoutModal" role="dialog">
+						    <div class="modal-dialog modal-sm">
+						      <div class="modal-content">
+						        <div class="modal-header header-login-signup-layout">
+						          <button type="button" class="close" data-dismiss="modal">&times;</button>
+						          <h4 class="modal-title">Login</h4>
+						        </div>
+						        <div class="modal-body ">
+						          <div class="row">
+					          		<div class="col-sm-12">
+					          				<div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable
+											 mdl-textfield--floating-label">
+											  <label class="mdl-button mdl-js-button mdl-button--icon" for="search-expandable2">
+											    <i class="material-icons">person</i>
+											  </label>
+											  <div class="mdl-textfield__expandable-holder">
+											    <input class="mdl-textfield__input" type="text" id="search-expandable2">
+											    <label class="mdl-textfield__label" for="search-expandable2">
+											      Enter username below
+											    </label>
+											  </div>
+											</div>
+					          		</div>
+						          </div>
+						          <div class="row">
+					          		<div class="col-sm-12">
+					          			<div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable
+											 mdl-textfield--floating-label">
+											  <label class="mdl-button mdl-js-button mdl-button--icon" for="search-expandable3">
+											    <i class="material-icons">person</i>
+											  </label>
+											  <div class="mdl-textfield__expandable-holder">
+											    <input class="mdl-textfield__input" type="password" id="search-expandable3">
+											    <label class="mdl-textfield__label" for="search-expandable2">
+											      Enter password below
+											    </label>
+											  </div>
+											</div>
+					          		</div>
+						          </div>
+						          <div class="row">
+					          		<div class="col-sm-6">
+					          			<button class="mdl-button mdl-js-button mdl-button--raised">
+										  Login
+										</button>
+					          		</div>
+					          	  </div>
+					          	  <div class="row">
+					          	  	<div class="col-sm-12 text-right">
+					          	  		<a href="#">Forget password ?</a>
+					          	  	</div>
+					          	  </div>
+					          	  <br/>
+					          	  <div class="row">
+					          	  	<div class="col-sm-12 text-center">
+					          	  		<i class="material-icons">person</i>
+					          	  	</div>
+					          	  </div>
+						        </div>
+						        <div class="modal-footer">
+						          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+						        </div>
+						      </div>
+						    </div>
+						  </div>
+						<!-- =======================================Login Layout Done=========================== -->
+					</div>
+				</div>				
 			</div>
 		</div>
 	</div>
 	<div class="col-sm-1 col-xs-1 col-md-1 header-pie"></div>
 	<div class="col-sm-1 col-xs-1 col-md-1 header-pie-right">
-		<a href="#" class="material-icons md-36 md-inactive md-light-custom">apps</a>
+		<a id="app-layout" href="#" class="material-icons md-36 md-inactive md-light-custom">apps</a>
+		<div class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect demo-card-event mdl-card mdl-shadow--2dp"
+			data-mdl-for="app-layout" style="width:300px;" >
+			<div class="mdl-card__title mdl-card--expand">
+				<div class="container">
+					<div class="row">
+					<div class="col-sm-12">
+						About us
+					</div>
+				</div>
+				<br/>
+				<div class="row">
+					<div class="col-sm-12">
+						We are the Tester to test Api <br/>
+						As well as UI and UX.we would like to say thanks for reaching us.
+					</div>
+				</div><br/>
+				<div class="row">
+					<div class="col-sm-12">
+						Thanks,
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-sm-2"></div>
+					<div class="col-sm-10">
+						Test Ux
+					</div>
+				</div>
+				</div>
+			  </div>
+			  <div class="mdl-card__actions mdl-card--border">
+			    <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+			      ContactUs
+			    </a>
+			    <div class="mdl-layout-spacer"></div>
+			  </div>
+		</div>
 	</div>
 </div>
 

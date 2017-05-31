@@ -35,6 +35,17 @@
 	left:10%;
 }
 
+.btn-login-signup{
+	position:absolute;
+	left:116%;
+	top:800%;
+}
+
+.header-login-signup-layout{
+	background-color : #2e7b84;
+	color : white;
+}
+
 .header-search-box{
 	color : #;
 }
@@ -53,6 +64,16 @@ a:hover
 a.md-light-custom:hover
   {
   		color: rgba(255, 255, 255, 1);
+   }
+   
+   button.background-color:hover
+  {
+  		background-color: rgba(255, 255, 255, 1);
+  		color : #0D5C5C;
+   
+   }
+   button.button-fed-white{
+   		color : #EEF5F5;
    }
    
    
@@ -96,4 +117,3 @@ a.md-light-custom:hover
         z-index: 3;   
     }
     /* ====================search-box-done======================== */   
-   
