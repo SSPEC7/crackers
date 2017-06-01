@@ -113,19 +113,80 @@
 						<button id="signup-layout" class="mdl-button mdl-js-button button-fed-white background-color"
 						data-toggle="modal" data-target="#signupLayoutModal"
 						>
-							<i class="material-icons">person_add</i>  
+						<i class="material-icons">person_add</i>  
 						</button>
 						<!-- ==========================Sign-up Layout============================= -->
 						  <div class="modal fade" id="signupLayoutModal" role="dialog">
-						    <div class="modal-dialog modal-sm ">
+						    <div class="modal-dialog ">
 						      <div class="modal-content">
 						        <div class="modal-header header-login-signup-layout">
 						          <button type="button" class="close" data-dismiss="modal">&times;</button>
 						          <h4 class="modal-title">Signup</h4>
 						        </div>
-						        <div class="modal-body">
-						          <p>This is a small modal.</p>
+						        <form action="#">
+						        <div class="modal-body ">
+						          <div class="row" >
+					          		<div class="col-sm-6">
+				          				<div  class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+										    <input class="mdl-textfield__input" type="text" id="username">
+										    <label class="mdl-textfield__label" for="username">username</label>
+										</div>
+					          		</div>
+					          		<div class="col-sm-6">
+				          				<div  class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+										    <input class="mdl-textfield__input" type="text" id="fullName">
+										    <label class="mdl-textfield__label" for="fullName">full name</label>
+										</div>
+					          		</div>
+						          </div>
+						          <div class="row" >
+					          		<div class="col-sm-6">
+				          				<div  class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+										    <input class="mdl-textfield__input" type="text" id="email">
+										    <label class="mdl-textfield__label" for="email">email</label>
+										</div>
+					          		</div>
+					          		<div class="col-sm-6">
+				          				<div  class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+										    <input class="mdl-textfield__input" type="text" id="email">
+										    <label class="mdl-textfield__label" for="Mob">contact no.</label>
+										</div>
+					          		</div>
+						          </div>
+						          <div class="row">
+					          		<div class="col-sm-6">
+					          			<div  class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+										    <input class="mdl-textfield__input" type="password" id="password">
+										    <label class="mdl-textfield__label" for="password">password</label>
+										</div>
+					          		</div>
+					          		<div class="col-sm-6">
+					          			<div  class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+										    <input class="mdl-textfield__input" type="password" id="repassword">
+										    <label class="mdl-textfield__label" for="repassword">retype</label>
+										</div>
+					          		</div>
+						          </div>
+						          <div class="row">
+					          		<div class="col-sm-6">
+					          			<button class="mdl-button mdl-js-button mdl-button--raised">
+										  Signup
+										</button>
+					          		</div>
+					          	  </div>
+					          	  <br/>
+					          	  <div class="row">
+					          	  	<div class="col-sm-12 text-center">
+					          	  		<img alt="" 
+												th:src="@{/resources/angular/image/facebook.png}">
+										<img alt="" 
+												th:src="@{/resources/angular/image/twitter.png}">
+										<img alt="" 
+												th:src="@{/resources/angular/image/google-plus.png}">				
+					          	  	</div>
+					          	  </div>
 						        </div>
+						        </form>
 						        <div class="modal-footer">
 						          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 						        </div>
@@ -141,43 +202,28 @@
 						</button>
 						<!-- ==========================Login Layout Done============================= -->
 						  <div class="modal fade" id="loginLayoutModal" role="dialog">
-						    <div class="modal-dialog modal-sm">
+						    <div class="modal-dialog ">
 						      <div class="modal-content">
 						        <div class="modal-header header-login-signup-layout">
 						          <button type="button" class="close" data-dismiss="modal">&times;</button>
 						          <h4 class="modal-title">Login</h4>
 						        </div>
+						        <form action="#">
 						        <div class="modal-body ">
-						          <div class="row">
+						          <div class="row" >
 					          		<div class="col-sm-12">
-					          				<div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable
-											 mdl-textfield--floating-label">
-											  <label class="mdl-button mdl-js-button mdl-button--icon" for="search-expandable2">
-											    <i class="material-icons">person</i>
-											  </label>
-											  <div class="mdl-textfield__expandable-holder">
-											    <input class="mdl-textfield__input" type="text" id="search-expandable2">
-											    <label class="mdl-textfield__label" for="search-expandable2">
-											      Enter username below
-											    </label>
-											  </div>
-											</div>
+				          				<div  class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+										    <input class="mdl-textfield__input" type="text" id="loginusername">
+										    <label class="mdl-textfield__label" for="loginusername">username</label>
+										</div>
 					          		</div>
 						          </div>
 						          <div class="row">
 					          		<div class="col-sm-12">
-					          			<div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable
-											 mdl-textfield--floating-label">
-											  <label class="mdl-button mdl-js-button mdl-button--icon" for="search-expandable3">
-											    <i class="material-icons">person</i>
-											  </label>
-											  <div class="mdl-textfield__expandable-holder">
-											    <input class="mdl-textfield__input" type="password" id="search-expandable3">
-											    <label class="mdl-textfield__label" for="search-expandable2">
-											      Enter password below
-											    </label>
-											  </div>
-											</div>
+					          			<div  class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+										    <input class="mdl-textfield__input" type="password" id="loginpassword">
+										    <label class="mdl-textfield__label" for="loginpassword">password</label>
+										</div>
 					          		</div>
 						          </div>
 						          <div class="row">
@@ -188,14 +234,19 @@
 					          		</div>
 					          	  </div>
 					          	  <div class="row">
-					          	  	<div class="col-sm-12 text-right">
+					          	  	<div class="col-sm-6 text-right">
 					          	  		<a href="#">Forget password ?</a>
 					          	  	</div>
 					          	  </div>
 					          	  <br/>
 					          	  <div class="row">
 					          	  	<div class="col-sm-12 text-center">
-					          	  		<i class="material-icons">person</i>
+					          	  		<img alt="" 
+												th:src="@{/resources/angular/image/facebook.png}">
+										<img alt="" 
+												th:src="@{/resources/angular/image/twitter.png}">
+										<img alt="" 
+												th:src="@{/resources/angular/image/google-plus.png}">				
 					          	  	</div>
 					          	  </div>
 						        </div>
@@ -253,4 +304,8 @@
 	</div>
 </div>
 
-
+<div th:fragment="welcomeBody">
+	<div class="col-sm-1"></div>
+	<div class="col-sm-8 product-layout mdl-shadow--2dp"></div>
+	<div class="col-sm-3 product-layout-right mdl-shadow--2dp"></div>
+</div>

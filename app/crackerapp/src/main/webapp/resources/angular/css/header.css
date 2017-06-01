@@ -30,6 +30,19 @@
 	top:14%;
 }
 
+.product-layout{
+	background-color:#e0e0e0;
+	margin-top:3%;
+}
+
+.product-layout-right{
+	background-color:#e0e0e0;
+	margin-top:3%;
+	position:absolute;
+	left:78%;
+	width:20%;
+}
+
 .header-search{
 	position:absolute;
 	left:10%;
