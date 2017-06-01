@@ -8,7 +8,7 @@
 
 'use strict';
 
-angular.module('userApp').factory('AuthService',
+angular.module('homeApp').factory('AuthService',
 		[ '$resource', function($resource) {
 			return new Auth($resource);
 		} ]);

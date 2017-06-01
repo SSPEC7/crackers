@@ -11,11 +11,11 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <div th:replace="commonComponent :: commonCss"></div>
 </head>
-<body class="demo-layout-transparent " >
-	<div class="container-fluid">
+<body ng-app="homeApp" class="demo-layout-transparent " >
+	<div class="container-fluid" ng-controller="SpaCtrl">
 		<div class="row" role="header">
 			<div class="col-sm-12" role="header-column">
-				<div th:replace="commonComponent :: header"></div>
+				<div ui-view="header"></div>
 			</div>
 		</div>
 		<div class="row" role="hero-panae">
@@ -24,7 +24,7 @@
 			</div>
 		</div>
 		<div class="row" role="page-body" style="position:relative;">
-			<div th:include="commonComponent :: welcomeBody"></div>
+			<div ui-view="content"></div>
 		</div>
 		<div class="row" role="footer">
 			<div class="col-sm-12"></div>
@@ -32,4 +32,5 @@
 	</div>
 </body>
 <div th:replace="commonComponent :: angulerMvc"></div>
+<div th:replace="homeComponent :: angulerMvc"></div>
 </html>

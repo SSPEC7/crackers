@@ -18,8 +18,20 @@ import org.springframework.web.servlet.ModelAndView;
 public class AdminController {
 
 	@RequestMapping(value = { "/welcome" }, method = RequestMethod.GET)
-	public ModelAndView form() throws IOException {
+	public ModelAndView welcome() throws IOException {
 		Map<String, Object> data = new HashMap<String, Object>();
 		return new ModelAndView("app/welcome", "data", data);
+	}
+	
+	@RequestMapping(value = { "/header" }, method = RequestMethod.GET)
+	public ModelAndView header() throws IOException {
+
+		return new ModelAndView("common/_header");
+	}
+	
+	@RequestMapping(value = { "/product-list" }, method = RequestMethod.GET)
+	public ModelAndView productListOnWelcome() throws IOException {
+
+		return new ModelAndView("product/list");
 	}
 }
