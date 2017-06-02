@@ -9,16 +9,22 @@
 
 'use strict';
 
-var homeApp = angular.module("homeApp", [ 'ngRoute', 'ngResource', 'ui.router' ]);
+var homeApp = angular.module("homeApp",
+		[ 'ngRoute',
+		  'ngResource',
+		  'ui.router'
+		 ]);
 
 var templateUrlConfig = {
 		appTemplateEntryPoint : "/crackerapp/app/"
 	};
 
-homeApp.config(function($stateProvider, $urlRouterProvider){
+homeApp.config(function($stateProvider, $urlRouterProvider,
+							userUrls
+							){
 	  $stateProvider
 	    .state('forms', {
-	      url: '/users/new',
+	      url: userUrls.newUser,
 	      views: {
 					header: viewHeader,
 					content:{

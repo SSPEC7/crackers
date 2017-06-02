@@ -9,7 +9,7 @@
 
 'use strict';
 
-var userApp = angular.module("userApp", [ 'ngRoute', 'ngResource', 'ui.router' ]);
+var userApp = angular.module("userApp", [ 'ngRoute', 'ngResource', 'ui.router' ,'authApp' ]);
 
 /*userApp.config([
 		'$routeProvider',
