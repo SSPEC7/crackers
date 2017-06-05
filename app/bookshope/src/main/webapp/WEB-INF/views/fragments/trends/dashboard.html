@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en"> 
+    <head th:replace="component :: materialDashBoardCss"></head>
+    
+    <body>
+		<div class="wrapper">
+
+			<div th:replace="component :: materialDashBoardSideNav"></div>
+
+	    	<div class="main-panel">
+			
+				<nav th:replace="component :: materialDashBoardHeadNav" ></nav>
+
+				<div class="content">
+					<div class="container-fluid">
+						<div class="row">
+							<div class="col-lg-3 col-md-6 col-sm-6">
+								<div class="card card-stats">
+									<div class="card-header" data-background-color="blue">
+										<i id="ficn" class="material-icons">content_copy</i>
+										<i id="fbtn" class="material-icons">exit_to_app</i>
+									</div>
+									<div class="card-content">
+										<p class="category">Social</p>
+										<h3 class="title">
+											<fb:login-button scope="public_profile,email"
+												class="fb-login-button" data-max-rows="1" data-size="large" data-show-faces="false"
+												onlogin="checkLoginState();"
+												data-auto-logout-link="true" >
+											</fb:login-button>
+										</h3>
+									</div>
+									<div class="card-footer">
+										<div class="stats">
+											<i class="material-icons">date_range</i> Last 24 Hours
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-lg-3 col-md-6 col-sm-6">
+								<div class="card card-stats">
+									<div class="card-header" data-background-color="green">
+										<i class="material-icons">store</i>
+									</div>
+									<div class="card-content" style="position:relative;">
+										<p class="category">Revenue</p>
+										<div class="title" style="margin-top:10px;" >
+											<!-- HTML for render Google Sign-In button -->
+											<div id="gSignIn"></div>
+											<div  class="userContent"></div>
+										</div>
+									</div>
+									<div class="card-footer">
+										<div class="stats">
+											<i class="material-icons">date_range</i> Last 24 Hours
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-lg-3 col-md-6 col-sm-6">
+								<div class="card card-stats">
+									<div class="card-header" data-background-color="red">
+										<i class="material-icons">info_outline</i>
+									</div>
+									<div class="card-content">
+										<p class="category">Fixed Issues</p>
+										<h3 class="title">75</h3>
+									</div>
+									<div class="card-footer">
+										<div class="stats">
+											<i class="material-icons">local_offer</i> Tracked from Github
+										</div>
+									</div>
+								</div>
+							</div>
+	
+							<div class="col-lg-3 col-md-6 col-sm-6">
+								<div class="card card-stats">
+									<div class="card-header" data-background-color="blue">
+										<i class="fa fa-twitter"></i>
+									</div>
+									<div class="card-content">
+										<p class="category">Followers</p>
+										<h3 class="title">+245</h3>
+									</div>
+									<div class="card-footer">
+										<div class="stats">
+											<i class="material-icons">update</i> Just Updated
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+	
+						<div class="row">
+							<div id="fbData" class="col-md-12 col-lg-12">
+								
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<footer th:replace="component :: materialDashBoardFooter" ></footer>
+			</div>
+		</div>
+
+	</body>
+	<div th:replace="component :: materialDashBoardJs"></div>
+	
+	<script type="text/javascript" th:inline="javascript">
+		var userName = /*[[${data.userName}]]*/'Hello';
+	</script>
+	
+</html>
