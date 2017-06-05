@@ -1,0 +1,215 @@
+<div class="row mdl-shadow--2dp header-formatter">
+	<div class="col-sm-3 col-xs-3 col-md-3 header-logo ">
+		<img alt="" class="img-header-logo"
+			th:src="@{/resources/angular/image/logo.png}">
+	</div>
+	<div class="col-sm-7 col-xs-7 col-md-7 header-search">
+		<div class="row">
+			<div class="col-sm-6" role="search-box">
+				<div id="custom-search-input">
+					<div class="input-group col-md-12">
+						<input type="text" class="  search-query form-control"
+							placeholder="Search" /> <span class="input-group-btn">
+							<button class="btn btn-info" type="button">
+								<i class="material-icons">search</i>
+							</button>
+						</span>
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-8 col-xs-6 col-md-6" >
+				<div class="row" role="login-signup">
+					<div class="col-sm-6 btn-login-signup">
+						<button id="signup-layout" class="mdl-button mdl-js-button button-fed-white background-color"
+						data-toggle="modal" data-target="#signupLayoutModal"
+						>
+						<i class="material-icons">person_add</i>  
+						</button>
+						<!-- ==========================Sign-up Layout============================= -->
+						  <div class="modal fade" id="signupLayoutModal" role="dialog">
+						    <div class="modal-dialog ">
+						      <div class="modal-content">
+						        <div class="modal-header header-login-signup-layout">
+						          <button type="button" class="close" data-dismiss="modal">&times;</button>
+						          <h4 class="modal-title">Signup</h4>
+						        </div>
+						        <form action="#">
+						        <div class="modal-body ">
+						          <div class="row" >
+					          		<div class="col-sm-6">
+				          				<div  class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+										    <input class="mdl-textfield__input" type="text" id="username">
+										    <label class="mdl-textfield__label" for="username">username</label>
+										</div>
+					          		</div>
+					          		<div class="col-sm-6">
+				          				<div  class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+										    <input class="mdl-textfield__input" type="text" id="fullName">
+										    <label class="mdl-textfield__label" for="fullName">full name</label>
+										</div>
+					          		</div>
+						          </div>
+						          <div class="row" >
+					          		<div class="col-sm-6">
+				          				<div  class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+										    <input class="mdl-textfield__input" type="text" id="email">
+										    <label class="mdl-textfield__label" for="email">email</label>
+										</div>
+					          		</div>
+					          		<div class="col-sm-6">
+				          				<div  class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+										    <input class="mdl-textfield__input" type="text" id="email">
+										    <label class="mdl-textfield__label" for="Mob">contact no.</label>
+										</div>
+					          		</div>
+						          </div>
+						          <div class="row">
+					          		<div class="col-sm-6">
+					          			<div  class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+										    <input class="mdl-textfield__input" type="password" id="password">
+										    <label class="mdl-textfield__label" for="password">password</label>
+										</div>
+					          		</div>
+					          		<div class="col-sm-6">
+					          			<div  class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+										    <input class="mdl-textfield__input" type="password" id="repassword">
+										    <label class="mdl-textfield__label" for="repassword">retype</label>
+										</div>
+					          		</div>
+						          </div>
+						          <div class="row">
+					          		<div class="col-sm-6">
+					          			<button class="mdl-button mdl-js-button mdl-button--raised">
+										  Signup
+										</button>
+					          		</div>
+					          	  </div>
+					          	  <br/>
+					          	  <div class="row">
+					          	  	<div class="col-sm-12 text-center">
+					          	  		<img alt="" 
+												th:src="@{/resources/angular/image/facebook.png}">
+										<img alt="" 
+												th:src="@{/resources/angular/image/twitter.png}">
+										<img alt="" 
+												th:src="@{/resources/angular/image/google-plus.png}">				
+					          	  	</div>
+					          	  </div>
+						        </div>
+						        </form>
+						        <div class="modal-footer">
+						          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+						        </div>
+						      </div>
+						    </div>
+						  </div>
+						<!-- ==========================Sign-up Layout Done============================= -->
+						<button id="login-layout"
+						        class="mdl-button mdl-js-button button-fed-white background-color"
+						       data-toggle="modal" data-target="#loginLayoutModal"
+						        >
+						  <i class="material-icons">input</i>
+						</button>
+						<!-- ==========================Login Layout Done============================= -->
+						  <div class="modal fade" id="loginLayoutModal" role="dialog">
+						    <div class="modal-dialog ">
+						      <div class="modal-content">
+						        <div class="modal-header header-login-signup-layout">
+						          <button type="button" class="close" data-dismiss="modal">&times;</button>
+						          <h4 class="modal-title">Login</h4>
+						        </div>
+						        <form action="#">
+						        <div class="modal-body ">
+						          <div class="row" >
+					          		<div class="col-sm-12">
+				          				<div  class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+										    <input class="mdl-textfield__input" type="text" id="loginusername">
+										    <label class="mdl-textfield__label" for="loginusername">username</label>
+										</div>
+					          		</div>
+						          </div>
+						          <div class="row">
+					          		<div class="col-sm-12">
+					          			<div  class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+										    <input class="mdl-textfield__input" type="password" id="loginpassword">
+										    <label class="mdl-textfield__label" for="loginpassword">password</label>
+										</div>
+					          		</div>
+						          </div>
+						          <div class="row">
+					          		<div class="col-sm-6">
+					          			<button class="mdl-button mdl-js-button mdl-button--raised">
+										  Login
+										</button>
+					          		</div>
+					          	  </div>
+					          	  <div class="row">
+					          	  	<div class="col-sm-6 text-right">
+					          	  		<a href="#">Forget password ?</a>
+					          	  	</div>
+					          	  </div>
+					          	  <br/>
+					          	  <div class="row">
+					          	  	<div class="col-sm-12 text-center">
+					          	  		<img alt="" 
+												th:src="@{/resources/angular/image/facebook.png}">
+										<img alt="" 
+												th:src="@{/resources/angular/image/twitter.png}">
+										<img alt="" 
+												th:src="@{/resources/angular/image/google-plus.png}">				
+					          	  	</div>
+					          	  </div>
+						        </div>
+						        <div class="modal-footer">
+						          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+						        </div>
+						      </div>
+						    </div>
+						  </div>
+						<!-- =======================================Login Layout Done=========================== -->
+					</div>
+				</div>				
+			</div>
+		</div>
+	</div>
+	<div class="col-sm-1 col-xs-1 col-md-1 header-pie"></div>
+	<div class="col-sm-1 col-xs-1 col-md-1 header-pie-right">
+		<a id="app-layout" href="#" class="material-icons md-36 md-inactive md-light-custom">apps</a>
+		<div class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect demo-card-event mdl-card mdl-shadow--2dp"
+			data-mdl-for="app-layout" style="width:300px;" >
+			<div class="mdl-card__title mdl-card--expand">
+				<div class="container">
+					<div class="row">
+					<div class="col-sm-12">
+						About us
+					</div>
+				</div>
+				<br/>
+				<div class="row">
+					<div class="col-sm-12">
+						We are the Tester to test Api <br/>
+						As well as UI and UX.we would like to say thanks for reaching us.
+					</div>
+				</div><br/>
+				<div class="row">
+					<div class="col-sm-12">
+						Thanks,
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-sm-2"></div>
+					<div class="col-sm-10">
+						Test Ux
+					</div>
+				</div>
+				</div>
+			  </div>
+			  <div class="mdl-card__actions mdl-card--border">
+			    <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+			      ContactUs
+			    </a>
+			    <div class="mdl-layout-spacer"></div>
+			  </div>
+		</div>
+	</div>
+</div>
