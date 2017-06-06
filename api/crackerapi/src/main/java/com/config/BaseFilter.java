@@ -55,9 +55,9 @@ public class BaseFilter implements Filter {
 			this.context.log(request.getRemoteAddr() + "::Request Params::{" + name + "=" + value + "}");
 		}
 
-		String token = req.getHeader("token");
+		String token = req.getHeader("X-AUTH-HEADER");
 		try {
-			if (!isIgnoreUrlForAuth(request)) {
+			if (isIgnoreUrlForAuth(request)) {
 				if (token.equals("RITESH9984")) {
 					writeBadCredantialToResponse(response);
 					return;

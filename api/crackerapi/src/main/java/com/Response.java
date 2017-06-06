@@ -10,6 +10,14 @@ public class Response {
 	private String statusDescription;
 	private Object data;
 	
+	public Response(int status, String statusDescription, Object data){
+		this.status = status;
+		this.statusDescription = statusDescription;
+		this.data = data;
+	}
+	
+	public Response(){}
+	
 	public int getStatus() {
 		return status;
 	}
