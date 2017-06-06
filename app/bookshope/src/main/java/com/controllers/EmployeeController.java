@@ -46,7 +46,7 @@ public class EmployeeController {
 	public ModelAndView form() throws IOException {
 		EmployeeRequest employee = new EmployeeRequest();
 		employee.setName("RITESH SINGH");
-		
+		System.out.println("create");
 		Map<String, Object> data = new HashMap<String, Object>();
 		data.put("content", "Woowwwww");
 		return new ModelAndView("admin/employee", "data", data);

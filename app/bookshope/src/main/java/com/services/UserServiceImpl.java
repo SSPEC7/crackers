@@ -51,7 +51,6 @@ public class UserServiceImpl extends DataAccessObject implements UserService {
 		Gson gson = new Gson();
 		String url = ip+port;
 		try{
-			
 			Map<String, String> header = new HashMap<String, String>();
 			
 			header.put("token", "myToken");
