@@ -36,10 +36,8 @@ public class BookAccountServiceImpl implements BookAccountService {
 	//@Async
 	public BookAccount save(BookAccount bookAccount) {
 		
-		
 		validate(bookAccount);
 		bookAccount = bookAccountRepository.save(bookAccount);
-		updateExistingBookWithNewAccountNo(bookAccount);
 		return bookAccount;
 	}
 	
@@ -49,7 +47,7 @@ public class BookAccountServiceImpl implements BookAccountService {
 				if(bookAccount.getBookId()!=null){
 					Book existingBook = bookRepository.findOne(bookAccount.getBookId());
 					if(StringUtils.isEmpty(existingBook)){
-						String message = String.format("Book is not exist, So BookAccount can not be created. bookId: %s"+bookAccount.getBookId());
+						String message = String.format("Book is not exist, So BookAccount can not be created. bookId:"+bookAccount.getBookId());
 						throw new BookException(message);
 					}
 				}
@@ -64,43 +62,9 @@ public class BookAccountServiceImpl implements BookAccountService {
 		editableInfo.setUpdatedAt();
 		editableInfo.setUpdatedBy("Super-Admin");
 		bookAccount.setEditableInfo(editableInfo);
+		bookAccount.setIsActive(false);
 	}
 	
-	private void updateExistingBookWithNewAccountNo(BookAccount bookAccount){
-		try{
-			Book existingBook = bookRepository.findOne(bookAccount.getBookId());
-			Book.Account account = existingBook.getAccount();
-			account.setAccountNo(bookAccount.getAccountNo());
-			account.setIsDiscount(bookAccount.getIsDiscount());
-			account.setMrp(bookAccount.getMrp());
-			account.setQuantity(bookAccount.getQuantity());
-			account.setUnit(bookAccount.getUnit());
-			existingBook.setAccount(account);
-			
-			if(bookAccount.getIsDiscount())
-				existingBook.setIsOffer(true);
-			else
-				existingBook.setIsOffer(false);
-			
-			if(bookAccount.getQuantity()>0)
-				existingBook.setIsAvailable(true);
-			else
-				existingBook.setIsAvailable(false);
-			
-			
-			EditableInfo editableInfo = existingBook.getEditableInfo();
-			editableInfo.setUpdatedAt();
-			editableInfo.setUpdatedBy("Super-Admin");
-			existingBook.setEditableInfo(editableInfo);
-			
-			bookRepository.save(existingBook);
-		}catch(Exception e){
-			bookAccountRepository.delete(bookAccount);
-			String message = String.format("Error while Updating Book at the time of BookAccount create.");
-			throw new BookException(message, e);
-		}
-	}
-
 	@Override
 	public Long count() {
 		return bookAccountRepository.count();
@@ -142,5 +106,64 @@ public class BookAccountServiceImpl implements BookAccountService {
 		}
 		
 		return bookAccount;
+	}
+	
+	@Override
+	public BookAccount active(String accountNo) {
+		BookAccount bookAccount = null;
+		try{
+			bookAccount = bookAccountRepository.findOne(accountNo);
+			if(!StringUtils.isEmpty(bookAccount)){
+				bookAccount.setIsActive(true);
+				
+				EditableInfo editableInfo = bookAccount.getEditableInfo();
+				editableInfo.setUpdatedAt();
+				editableInfo.setUpdatedBy("Super-Admin");
+				bookAccount.setEditableInfo(editableInfo);
+				
+				bookAccountRepository.save(bookAccount);
+				updateExistingBookWithNewAccountNo(bookAccount);
+			}
+		}catch(Exception e){
+			String message = String.format("Error while inActivating BookAccount. bookAccountNo is : %s"+accountNo);
+			throw new BookException(message, e);
+		}
+		
+		return bookAccount;
+	}
+	
+	private void updateExistingBookWithNewAccountNo(BookAccount bookAccount){
+		try{
+			Book existingBook = bookRepository.findOne(bookAccount.getBookId());
+			Book.Account account = existingBook.getAccount();
+			account.setAccountNo(bookAccount.getAccountNo());
+			account.setIsDiscount(bookAccount.getIsDiscount());
+			account.setMrp(bookAccount.getMrp());
+			account.setQuantity(bookAccount.getQuantity());
+			account.setUnit(bookAccount.getUnit());
+			existingBook.setAccount(account);
+			
+			if(bookAccount.getIsDiscount())
+				existingBook.setIsOffer(true);
+			else
+				existingBook.setIsOffer(false);
+			
+			if(bookAccount.getQuantity()>0)
+				existingBook.setIsAvailable(true);
+			else
+				existingBook.setIsAvailable(false);
+			
+			
+			EditableInfo editableInfo = existingBook.getEditableInfo();
+			editableInfo.setUpdatedAt();
+			editableInfo.setUpdatedBy("Super-Admin");
+			existingBook.setEditableInfo(editableInfo);
+			
+			bookRepository.save(existingBook);
+		}catch(Exception e){
+			bookAccountRepository.delete(bookAccount);
+			String message = String.format("Error while Updating Book at the time of BookAccount create.");
+			throw new BookException(message, e);
+		}
 	}
 }

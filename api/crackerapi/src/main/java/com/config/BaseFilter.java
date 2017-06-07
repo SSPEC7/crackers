@@ -67,7 +67,6 @@ public class BaseFilter implements Filter {
 			writeErrorToResponse(e, response);
 			return;
 		}
-
 		chain.doFilter(request, response);
 	}
 

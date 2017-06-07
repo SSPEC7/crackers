@@ -12,6 +12,7 @@ import com.models.BookAccount;
 public interface BookAccountService {
 	public BookAccount save(BookAccount bookAccount);
 	public BookAccount inActive(String accountNo);
+	public BookAccount active(String accountNo);
 	public Long count();
 	public List<BookAccount> getBookAccounts();
 	public List<BookAccount> getBookAccounts(Sort sort);
