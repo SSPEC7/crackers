@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.HelperUtility;
 import com.Response;
@@ -44,48 +46,54 @@ public class BookController {
 	private BookService bookService;
 	
 	/**
-	 * <b>Create new book.</b>
 	 * 
-	 * <h3>Request Method POST</h3>
-	 * 
-	 * @param book : Object Type , param Type RequestBody
-	 * @param accessToken : String Type but not required, param Type RequestHeader
+	 * @param bookString 
+	 * @param logo
+	 * @param image
+	 * @param accessToken
 	 * @param response
-	 * @return response 
+	 * @return Object
 	 * @throws UnknownHostException
 	 */
 	@CrossOrigin
-	@RequestMapping(value = "/", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/", method = RequestMethod.POST)
 	public @ResponseBody ResponseEntity<Response> saveBook(
-			@RequestBody Book book,
+			@RequestParam(value = "book")  String bookString,
+			@RequestParam(value = "logo", required = false) MultipartFile logo,
+			@RequestParam(value = "image", required = false) MultipartFile image,
 			@RequestHeader(value = "X-AUTH-HEADER", defaultValue = "foo") String accessToken,
 			HttpServletResponse response)throws UnknownHostException {
 
+		Book book = new Gson().fromJson(bookString, Book.class);
 		return new ResponseEntity<Response>(
-				new Response(200, "Book saved successfully.",bookService.save(book)),
+				new Response(200, "Book saved successfully.",bookService.save(book,logo,image)),
 				HttpStatus.OK);
 	}
 	
 	/**
-	 * <b>Update the Book.</b>
-	 * 
+	 * <b>Update the Book.</b> 
 	 * <h3>Request Method PUT</h3>
-	 * 
-	 * @param book : Object Type , param Type RequestBody
+	 *
+	 * @param bookString : json String Type , param Type RequestParam
+	 * @param logo : MultipartFile Type , param Type RequestParam
+	 * @param image : MultipartFile Type , param Type RequestParam
 	 * @param accessToken : String Type but not required, param Type RequestHeader
 	 * @param response
-	 * @return response
+	 * @return
 	 * @throws UnknownHostException
 	 */
 	@CrossOrigin
 	@RequestMapping(value = "/", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody ResponseEntity<Response> updateBook(
-			@RequestBody Book book,
+			@RequestParam(value = "book")  String bookString,
+			@RequestParam(value = "logo", required = false) MultipartFile logo,
+			@RequestParam(value = "image", required = false) MultipartFile image,
 			@RequestHeader(value = "X-AUTH-HEADER", defaultValue = "foo") String accessToken,
 			HttpServletResponse response)throws UnknownHostException {
 
+		Book book = new Gson().fromJson(bookString, Book.class);
 		return new ResponseEntity<Response>(
-				new Response(200, "Book updates successfully.",bookService.update(book)),
+				new Response(200, "Book updates successfully.",bookService.update(book,logo,image)),
 				HttpStatus.OK);
 	}
 	

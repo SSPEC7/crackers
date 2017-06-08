@@ -29,6 +29,7 @@ public class Book implements Serializable {
 	private String category;
 	private String type;
 	private String bookImage;
+	private String hashedBookImage;
 	private String bookCoverImage;
 	private Boolean isAvailable;
 	private Boolean isOffer;
@@ -219,5 +220,13 @@ public class Book implements Serializable {
 
 	public void setBookCode(String bookCode) {
 		this.bookCode = bookCode;
+	}
+
+	public String getHashedBookImage() {
+		return hashedBookImage;
+	}
+
+	public void setHashedBookImage(String hashedBookImage) {
+		this.hashedBookImage = hashedBookImage;
 	}
 }

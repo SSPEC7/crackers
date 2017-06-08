@@ -10,7 +10,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.Constants;
 import com.exception.BookException;
 import com.modelUtility.EditableInfo;
 import com.models.Book;
@@ -26,11 +28,30 @@ public class BookServiceImpl implements BookService {
 	@Autowired
 	@Qualifier("bookRepository")
 	private BookRepository bookRepository;
+	
+	@Autowired
+	@Qualifier("fileUtility")
+	private FileUtility fileUtility;
 
 	@Override
-	public Book save(Book book) {
+	public Book save(Book book, MultipartFile logo, MultipartFile image) {
 		
 		validate(book);
+		String hashedFileName = null;
+		try {
+			if (logo != null && !logo.isEmpty()) {
+				hashedFileName = fileUtility.getFileName(logo.getOriginalFilename());
+				fileUtility.saveFile( logo, Constants.FOLDER_BOOK, book.getBookCode(),
+						hashedFileName);
+				book.setBookImage(logo.getOriginalFilename());
+				book.setHashedBookImage(hashedFileName);
+			}
+			
+		} catch (Exception e) {
+			fileUtility.deleteFile(Constants.FOLDER_BOOK, book.getBookCode(), hashedFileName);
+			throw e;
+		}
+		
 		return bookRepository.save(book);
 	}
 
@@ -94,9 +115,25 @@ public class BookServiceImpl implements BookService {
 	}
 
 	@Override
-	public Book update(Book book) {
+	public Book update(Book book, MultipartFile logo, MultipartFile image) {
 		Book updateBook = validateToUpdate(book);
+		
 		if(!StringUtils.isEmpty(updateBook)){
+			String hashedFileName = null;
+			try {
+				if (logo != null && !logo.isEmpty()) {
+					hashedFileName = fileUtility.getFileName(logo.getOriginalFilename());
+					fileUtility.saveFile( logo, Constants.FOLDER_BOOK, book.getBookCode(),
+							hashedFileName);
+					book.setBookImage(logo.getOriginalFilename());
+					book.setHashedBookImage(hashedFileName);
+				}
+				
+			} catch (Exception e) {
+				fileUtility.deleteFile(Constants.FOLDER_BOOK, book.getBookCode(), hashedFileName);
+				throw e;
+			}
+			
 			return bookRepository.save(updateBook);
 		}
 		return null;

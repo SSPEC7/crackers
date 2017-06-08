@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.models.Book;
 
@@ -13,8 +14,8 @@ import com.models.Book;
  */
 public interface BookService {
 
-	public Book save(Book book);
-	public Book update(Book book);
+	public Book save(Book book, MultipartFile logo, MultipartFile image);
+	public Book update(Book book, MultipartFile logo, MultipartFile image);
 	public Long count();
 	public List<Book> getBooks();
 	public List<Book> getBooks(Sort sort);
