@@ -10,9 +10,21 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
+/**
+ * 
+ * @author RITESH SINGH
+ */
 public class HelperUtility {
 
-	public static Pageable getPageable(int page, int size, String sort){
+	/**
+	 * @author RITESH SINGH
+	 * @param page
+	 * @param size
+	 * @param sort
+	 * @param totalElements
+	 * @return
+	 */
+	public static Pageable getPageable(Integer page, Integer size, String sort, Long totalElements){
 		List<Sort.Order> orders = new ArrayList<>();
         if(sort!=null){
         	String[] propOrderSplit = sort.split(",");
@@ -25,10 +37,19 @@ public class HelperUtility {
                 orders.add(new Sort.Order(direction, property));
             }
         }
-        return new PageRequest(page, size,
+        
+        if(page!=null & size !=null)
+        	return new PageRequest(page, size,
+                orders.isEmpty() ? null : new Sort(orders));
+        return new PageRequest(0, Integer.parseInt(totalElements+""),
                 orders.isEmpty() ? null : new Sort(orders));
 	}
 	
+	/**
+	 * @author RITESH SINGH
+	 * @param page
+	 * @return
+	 */
 	public static <T> Map<String,Object> getPageableResponse(Page<T> page){
 		Map<String,Object> data = new HashMap<String,Object>();
 		data.put("totalPages", page.getTotalPages());
@@ -41,8 +62,14 @@ public class HelperUtility {
 		return data;
 	}
 	
-	public static <T> void setTotalElements(List<T> list,Map<String,Object> data){
+	/**
+	 * @author RITESH SINGH
+	 * @param list
+	 * @param data
+	 */
+	public static <T> Map<String,Object> setTotalElements(List<T> list,Map<String,Object> data){
 		if(data!=null)
 			data.put("totalElements", list!=null ? list.size() : 0);
+		return data;
 	}
 }

@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
@@ -166,4 +168,30 @@ public class BookAccountServiceImpl implements BookAccountService {
 			throw new BookException(message, e);
 		}
 	}
+
+	@Override
+	public List<BookAccount> getBookAccountByBookId(String bookId) {
+		
+		return bookAccountRepository.getBookAccountsByBookId(bookId);
+	}
+	
+	@Override
+	public List<BookAccount> getBookAccountsByBookIdAndStatus(String bookId, Boolean status) {
+		
+		return bookAccountRepository.getBookAccountsByBookIdAndStatus(bookId, status);
+	}
+
+	@Override
+	public Page<BookAccount> getBookAccounts(Pageable pageable) {
+		
+		return bookAccountRepository.findAll(pageable);
+	}
+
+	@Override
+	public List<BookAccount> getBookAccountByStatus(Boolean status) {
+		
+		return bookAccountRepository.getBookAccountsByStatus(status);
+	}
+
+	
 }

@@ -26,7 +26,8 @@ import com.services.UserService;
 
 /**
  * @author RITESH SINGH
- *
+ * @since 2017-06-08
+ * @deprecated
  */
 @Controller("userController")
 @ComponentScan("com.services")
@@ -37,11 +38,20 @@ public class UserController {
 	@Qualifier("userService")
 	private UserService userService;
 
+	/**
+	 * <b>Create new User.</b>
+	 * <h3>Request Method POST</h3>
+	 * @param user : Object Type, param Type RequestBody
+	 * @param accessToken : String Type but not required, param Type RequestHeader
+	 * @param response
+	 * @return
+	 * @throws UnknownHostException
+	 */
 	@CrossOrigin 
 	@RequestMapping(value = "/", method = RequestMethod.POST, produces = "application/json")
-	public @ResponseBody String saveUser(ModelMap model, @RequestBody User user,
-			@RequestHeader(value = "token", defaultValue = "foo") String userAgent, HttpServletResponse response)
-			throws UnknownHostException {
+	public @ResponseBody String saveUser(@RequestBody User user,
+			@RequestHeader(value = "X-AUTH-HEADER", defaultValue = "foo") String accessToken,
+			HttpServletResponse response) throws UnknownHostException {
 		Response responseData = new Response();
 		responseData.setData(user);
 		responseData.setStatus(200);
@@ -57,11 +67,19 @@ public class UserController {
 		return new Gson().toJson(responseData);
 	}
 	
+	/**
+	 * <b>Returns all users List</b>
+	 * <h3>Request Method GET</h3>
+	 * @param accessToken : String Type but not required, param Type RequestHeader
+	 * @param response
+	 * @return
+	 * @throws UnknownHostException
+	 */
 	@CrossOrigin 
 	@RequestMapping(value = "/", method = RequestMethod.GET, produces = "application/json")
-	public @ResponseBody String getUsers(ModelMap model,
-			@RequestHeader(value = "token", defaultValue = "foo") String userAgent, HttpServletResponse response)
-			throws UnknownHostException {
+	public @ResponseBody String getUsers(
+			@RequestHeader(value = "X-AUTH-HEADER", defaultValue = "foo") String accessToken,
+			HttpServletResponse response) throws UnknownHostException {
 
 		List<User> users = null;	
 		Response responseData = new Response();
@@ -80,11 +98,20 @@ public class UserController {
 		return new Gson().toJson(responseData);
 	}
 	
+	/**
+	 * <b>Returns user of given userName</b>
+	 * <h3>Request Method GET</h3>
+	 * @param accessToken : String Type but not required, param Type RequestHeader
+	 * @param userName : String Type, param Type PathVariable
+	 * @param response
+	 * @return
+	 * @throws UnknownHostException
+	 */
 	@CrossOrigin 
 	@RequestMapping(value = "/{userName}", method = RequestMethod.GET, produces = "application/json")
-	public @ResponseBody String getUserByUserName(ModelMap model,
-			@RequestHeader(value = "token", defaultValue = "foo") String userAgent,@PathVariable("userName") String userName, HttpServletResponse response)
-			throws UnknownHostException {
+	public @ResponseBody String getUserByUserName(
+			@RequestHeader(value = "X-AUTH-HEADER", defaultValue = "foo") String accessToken,
+			@PathVariable("userName") String userName, HttpServletResponse response) throws UnknownHostException {
 		Response responseData = new Response();
 		User user = null;	
 		

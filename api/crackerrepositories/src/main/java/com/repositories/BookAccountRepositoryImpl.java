@@ -157,4 +157,22 @@ public class BookAccountRepositoryImpl implements BookAccountRepository {
 		// TODO Auto-generated method stub
 		return false;
 	}
+
+	@Override
+	public List<BookAccount> getBookAccountsByBookId(String bookId) {
+		
+		return bookAccountDao.getBookAccountBybookId(bookId);
+	}
+	
+	@Override
+	public List<BookAccount> getBookAccountsByBookIdAndStatus(String bookId, Boolean status) {
+		return null;
+		//return bookAccountDao.getBookAccountBybookIdAndisActive(bookId, status);
+	}
+
+	@Override
+	public List<BookAccount> getBookAccountsByStatus(Boolean status) {
+		
+		return bookAccountDao.getBookAccountByisActive(status);
+	}
 }

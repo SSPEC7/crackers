@@ -32,7 +32,7 @@ import com.services.BookService;
 
 /**
  * @author RITESH SINGH
- *
+ * @since 2017-06-08
  */
 @Controller("bookController")
 @ComponentScan("com.services")
@@ -44,11 +44,14 @@ public class BookController {
 	private BookService bookService;
 	
 	/**
+	 * <b>Create new book.</b>
 	 * 
-	 * @param book
-	 * @param accessToken
+	 * <h3>Request Method POST</h3>
+	 * 
+	 * @param book : Object Type , param Type RequestBody
+	 * @param accessToken : String Type but not required, param Type RequestHeader
 	 * @param response
-	 * @return
+	 * @return response 
 	 * @throws UnknownHostException
 	 */
 	@CrossOrigin
@@ -63,6 +66,17 @@ public class BookController {
 				HttpStatus.OK);
 	}
 	
+	/**
+	 * <b>Update the Book.</b>
+	 * 
+	 * <h3>Request Method PUT</h3>
+	 * 
+	 * @param book : Object Type , param Type RequestBody
+	 * @param accessToken : String Type but not required, param Type RequestHeader
+	 * @param response
+	 * @return response
+	 * @throws UnknownHostException
+	 */
 	@CrossOrigin
 	@RequestMapping(value = "/", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody ResponseEntity<Response> updateBook(
@@ -76,11 +90,14 @@ public class BookController {
 	}
 	
 	/**
-	 * 
-	 * @param bookId
-	 * @param accessToken
+	 * <b>Returns book.</b>
+	 *
+	 * <h3>Request Method GET</h3>
+	 *
+	 * @param bookId : String Type, param Type PathVariable
+	 * @param accessToken : String Type but not required, param Type RequestHeader
 	 * @param response
-	 * @return
+	 * @return response
 	 * @throws UnknownHostException
 	 */
 	@CrossOrigin
@@ -96,56 +113,35 @@ public class BookController {
 	}
 	
 	/**
+	 * <b>Returns all book List.</b>
 	 * 
-	 * @param query
-	 * @param accessToken
+	 * <h3>Request Method GET</h3>
+	 * 
+	 * Example URL : http://localhost:8989/crackerapi/book/?page=1&size=4&sort=bookName,DESC  
+	 * 
+	 * @param query : String Type, param Type RequestParam
+	 * @param page : Integer Type, param Type RequestParam
+	 * @param size : Integer Type, param Type RequestParam
+	 * @param sort : String Type, param Type RequestParam
+	 * @param accessToken : String Type but not required, param Type RequestHeader
 	 * @param response
-	 * @return
+	 * @return response
 	 * @throws UnknownHostException
 	 */
 	@CrossOrigin
 	@RequestMapping(value = "/", method = RequestMethod.GET, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody ResponseEntity<Response> getAllBooks(
-			@RequestParam(value = "q", required = false) String query,
-			@RequestHeader(value = "X-AUTH-HEADER", defaultValue = "foo") String accessToken,
-			HttpServletResponse response)throws UnknownHostException {
-		
-		List<Book> books = bookService.getBooks();
-		Map<String,Object> additionalData = new HashMap<String, Object>();
-		HelperUtility.setTotalElements(books, additionalData);
-		
-		return new ResponseEntity<Response>(
-				new Response(200, "Fetched all books successfully.",books,additionalData),
-				HttpStatus.OK);
-	}
-	
-	
-	/**
-	 * 
-	 * @param query
-	 * @param page
-	 * @param size
-	 * @param sort
-	 * @param accessToken
-	 * @param response
-	 * @return
-	 * @throws UnknownHostException
-	 */
-	// http://localhost:8989/crackerapi/book/?page=1&size=4&sort=bookName,DESC
-	@CrossOrigin
-	@RequestMapping(value = "/all", method = RequestMethod.GET, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody ResponseEntity<Response> getBooks(
 			@RequestParam(value = "q", required = false) String query,
-			@RequestParam(value = "page", required = true) int page,
-			@RequestParam(value = "size", required = true) int size,
-			@RequestParam(value = "sort", required = true) String sort,
+			@RequestParam(value = "page", required = false) Integer page,
+			@RequestParam(value = "size", required = false) Integer size,
+			@RequestParam(value = "sort", required = false) String sort,
 			@RequestHeader(value = "X-AUTH-HEADER", defaultValue = "foo") String accessToken,
 			HttpServletResponse response)throws UnknownHostException {
 		
-		Page<Book> books = bookService.getBooks(HelperUtility.getPageable(page, size, sort));
+		Long totalElements = bookService.count();
+		Page<Book> pages = bookService.getBooks(HelperUtility.getPageable(page, size, sort, totalElements));
 		
-		return new ResponseEntity<Response>(
-				new Response(200, "Fetched books successfully of given page.",books.getContent(),HelperUtility.getPageableResponse(books)),
-				HttpStatus.OK);
+		return new ResponseEntity<Response>(new Response(200, "Fetched books successfully of given page.",
+				pages.getContent(), HelperUtility.getPageableResponse(pages)), HttpStatus.OK);
 	}
 }
