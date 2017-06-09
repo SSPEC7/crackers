@@ -47,9 +47,9 @@ public class BookController {
 	
 	/**
 	 * 
-	 * @param bookString 
-	 * @param logo
-	 * @param image
+	 * @param bookString : json String Type , param Type RequestParam
+	 * @param logo : MultipartFile Type , param Type RequestParam
+	 * @param image : MultipartFile Type , param Type RequestParam
 	 * @param accessToken
 	 * @param response
 	 * @return Object
@@ -58,7 +58,7 @@ public class BookController {
 	@CrossOrigin
 	@RequestMapping(value = "/", method = RequestMethod.POST)
 	public @ResponseBody ResponseEntity<Response> saveBook(
-			@RequestParam(value = "book")  String bookString,
+			@RequestParam(value = "bookString")  String bookString,
 			@RequestParam(value = "logo", required = false) MultipartFile logo,
 			@RequestParam(value = "image", required = false) MultipartFile image,
 			@RequestHeader(value = "X-AUTH-HEADER", defaultValue = "foo") String accessToken,
@@ -83,17 +83,17 @@ public class BookController {
 	 * @throws UnknownHostException
 	 */
 	@CrossOrigin
-	@RequestMapping(value = "/", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/update", method = RequestMethod.POST)
 	public @ResponseBody ResponseEntity<Response> updateBook(
-			@RequestParam(value = "book")  String bookString,
-			@RequestParam(value = "logo", required = false) MultipartFile logo,
+			@RequestParam(value = "bookString")  String bookString,
+			@RequestParam(value = "coverImage", required = false) MultipartFile coverImage,
 			@RequestParam(value = "image", required = false) MultipartFile image,
 			@RequestHeader(value = "X-AUTH-HEADER", defaultValue = "foo") String accessToken,
 			HttpServletResponse response)throws UnknownHostException {
 
 		Book book = new Gson().fromJson(bookString, Book.class);
 		return new ResponseEntity<Response>(
-				new Response(200, "Book updates successfully.",bookService.update(book,logo,image)),
+				new Response(200, "Book updates successfully.",bookService.update(book,coverImage,image)),
 				HttpStatus.OK);
 	}
 	

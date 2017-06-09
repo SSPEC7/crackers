@@ -32,63 +32,17 @@ public class BookServiceImpl implements BookService {
 	@Autowired
 	@Qualifier("fileUtility")
 	private FileUtility fileUtility;
+	
+	private BookServiceImpl.InnerProccess innerProccess;
 
 	@Override
-	public Book save(Book book, MultipartFile logo, MultipartFile image) {
+	public Book save(Book book, MultipartFile coverImage, MultipartFile image) {
 		
-		validate(book);
-		String hashedFileName = null;
-		try {
-			if (logo != null && !logo.isEmpty()) {
-				hashedFileName = fileUtility.getFileName(logo.getOriginalFilename());
-				fileUtility.saveFile( logo, Constants.FOLDER_BOOK, book.getBookCode(),
-						hashedFileName);
-				book.setBookImage(logo.getOriginalFilename());
-				book.setHashedBookImage(hashedFileName);
-			}
-			
-		} catch (Exception e) {
-			fileUtility.deleteFile(Constants.FOLDER_BOOK, book.getBookCode(), hashedFileName);
-			throw e;
-		}
-		
+		innerProccess.validateTosave(book);
+		innerProccess.proccessBookLogoAndImage(book,coverImage,image,false);
 		return bookRepository.save(book);
 	}
 
-	private void validate(Book book){
-		try{
-			if(!StringUtils.isEmpty(book)){
-				if(book.getBookName()==null){
-					String message = String.format("Book-Name can not be blank.");
-					throw new BookException(message);
-				}
-				if(book.getBookCode()==null){
-					String message = String.format("Book-Code can not be blank.");
-					throw new BookException(message);
-				}
-				
-				Book.Account account = (new Book()).new Account();
-				account.setIsDiscount(false);
-				account.setMrp(00000D);
-				account.setQuantity(00L);
-				account.setUnit("XXXX");
-				book.setAccount(account);
-				book.setIsAvailable(false);
-				book.setIsOffer(false);
-				EditableInfo editableInfo = new EditableInfo();
-				editableInfo.setCreatedAt();
-				editableInfo.setCreatedBy("Super-Admin");
-				editableInfo.setUpdatedAt();
-				editableInfo.setUpdatedBy("Super-Admin");
-				book.setEditableInfo(editableInfo);
-				
-			}
-		}catch (Exception e) {
-			String message = String.format("Error while validating Book for create.");
-			throw new BookException(message, e);
-		}
-	}
-	
 	@Override
 	public Long count() {
 		return bookRepository.count();
@@ -115,79 +69,142 @@ public class BookServiceImpl implements BookService {
 	}
 
 	@Override
-	public Book update(Book book, MultipartFile logo, MultipartFile image) {
-		Book updateBook = validateToUpdate(book);
+	public Book update(Book book, MultipartFile coverImage, MultipartFile image) {
+		Book updateBook = innerProccess.validateToUpdate(book);
 		
 		if(!StringUtils.isEmpty(updateBook)){
+			innerProccess.proccessBookLogoAndImage(updateBook,coverImage,image,true);
+			return bookRepository.save(updateBook);
+		}
+		return null;
+	}
+	
+	/**
+	 * <b>This class is used only for utilities process. </b>
+	 * @author RITESH SINGH
+	 *
+	 */
+	class InnerProccess{
+		
+		private void proccessBookLogoAndImage(Book book, MultipartFile coverImage,MultipartFile image, Boolean isUpdate){
+			
 			String hashedFileName = null;
 			try {
-				if (logo != null && !logo.isEmpty()) {
-					hashedFileName = fileUtility.getFileName(logo.getOriginalFilename());
-					fileUtility.saveFile( logo, Constants.FOLDER_BOOK, book.getBookCode(),
-							hashedFileName);
-					book.setBookImage(logo.getOriginalFilename());
-					book.setHashedBookImage(hashedFileName);
+				if (image != null && !image.isEmpty()) {
+					if(isUpdate){
+						fileUtility.deleteFile(Constants.FOLDER_BOOK, book.getBookCode(), book.getHashedBookImage());
+					}
+					saveBookImage(book, image, hashedFileName);
+					saveBookLogo(book, coverImage, hashedFileName);
 				}
 				
 			} catch (Exception e) {
 				fileUtility.deleteFile(Constants.FOLDER_BOOK, book.getBookCode(), hashedFileName);
 				throw e;
 			}
-			
-			return bookRepository.save(updateBook);
-		}
-		return null;
-	}
-	
-	private Book validateToUpdate(Book book){
-		try{
-			if(!StringUtils.isEmpty(book)){
-				if(book.getId()!=null){			
-					Book existingBook = getBookById(book.getId());
-					if(!StringUtils.isEmpty(existingBook)){
-						if(book.getBookName()!=null)
-							existingBook.setBookName(book.getBookName());
-						if(book.getIsAvailable()!=null)
-							existingBook.setIsAvailable(book.getIsAvailable());
-						if(book.getIsOffer()!=null)
-							existingBook.setIsOffer(book.getIsOffer());
-						if(book.getAboutBook()!=null)
-							existingBook.setAboutBook(book.getAboutBook());
-						if(book.getBookCoverImage()!=null)
-							existingBook.setBookCoverImage(book.getBookCoverImage());
-						if(book.getBookImage()!=null)
-							existingBook.setBookImage(book.getBookImage());
-						if(book.getCategory()!=null)
-							existingBook.setCategory(book.getCategory());
-						if(book.getPublisherName()!=null)
-							existingBook.setPublisherName(book.getPublisherName());
-						if(book.getSeries()!=null)
-							existingBook.setSeries(book.getSeries());
-						if(book.getTag()!=null)
-							existingBook.setTag(book.getTag());
-						if(book.getTotalPages()!=null)
-							existingBook.setTotalPages(book.getTotalPages());
-						if(book.getType()!=null)
-							existingBook.setType(book.getType());
-						if(book.getVersion()!=null)
-							existingBook.setVersion(book.getVersion());
-						if(book.getWritterName()!=null)
-							existingBook.setWritterName(book.getWritterName());
-					
-						EditableInfo editableInfo = existingBook.getEditableInfo();
-						editableInfo.setUpdatedAt();
-						editableInfo.setUpdatedBy("Super-Admin");
-						existingBook.setEditableInfo(editableInfo);
-						
-						return existingBook;
-					}
-				}
-			}
-		}catch (Exception e) {
-			String message = String.format("Error while validating Book for update.");
-			throw new BookException(message, e);
 		}
 		
-		return null;
+		private void saveBookImage(Book book, MultipartFile image, String hashedFileName){
+			
+			hashedFileName = fileUtility.getFileName(image.getOriginalFilename());
+			fileUtility.saveFile( image, Constants.FOLDER_BOOK, book.getBookCode(),
+					hashedFileName);
+			book.setBookImage(image.getOriginalFilename());
+			book.setHashedBookImage(hashedFileName);
+		}
+		
+		private void saveBookLogo(Book book, MultipartFile coverImage, String hashedFileName){
+			hashedFileName = fileUtility.getFileName(coverImage.getOriginalFilename());
+			fileUtility.saveFile( coverImage, Constants.FOLDER_BOOK, book.getBookCode(),
+					hashedFileName);
+			book.setBookCoverImage(coverImage.getOriginalFilename());
+			book.setHashedBookCoverImage(hashedFileName);
+		}
+		
+		private void validateTosave(Book book){
+			try{
+				if(!StringUtils.isEmpty(book)){
+					if(book.getBookName()==null){
+						String message = String.format("Book-Name can not be blank.");
+						throw new BookException(message);
+					}
+					if(book.getBookCode()==null){
+						String message = String.format("Book-Code can not be blank.");
+						throw new BookException(message);
+					}
+					
+					Book.Account account = (new Book()).new Account();
+					account.setIsDiscount(false);
+					account.setMrp(00000D);
+					account.setQuantity(00L);
+					account.setUnit("XXXX");
+					book.setAccount(account);
+					book.setIsAvailable(false);
+					book.setIsOffer(false);
+					EditableInfo editableInfo = new EditableInfo();
+					editableInfo.setCreatedAt();
+					editableInfo.setCreatedBy("Super-Admin");
+					editableInfo.setUpdatedAt();
+					editableInfo.setUpdatedBy("Super-Admin");
+					book.setEditableInfo(editableInfo);
+					
+				}
+			}catch (Exception e) {
+				String message = String.format("Error while validating Book for create.");
+				throw new BookException(message, e);
+			}
+		}
+		
+		private Book validateToUpdate(Book book){
+			try{
+				if(!StringUtils.isEmpty(book)){
+					if(book.getId()!=null){			
+						Book existingBook = getBookById(book.getId());
+						if(!StringUtils.isEmpty(existingBook)){
+							if(book.getBookName()!=null)
+								existingBook.setBookName(book.getBookName());
+							if(book.getIsAvailable()!=null)
+								existingBook.setIsAvailable(book.getIsAvailable());
+							if(book.getIsOffer()!=null)
+								existingBook.setIsOffer(book.getIsOffer());
+							if(book.getAboutBook()!=null)
+								existingBook.setAboutBook(book.getAboutBook());
+							if(book.getBookCoverImage()!=null)
+								existingBook.setBookCoverImage(book.getBookCoverImage());
+							if(book.getBookImage()!=null)
+								existingBook.setBookImage(book.getBookImage());
+							if(book.getCategory()!=null)
+								existingBook.setCategory(book.getCategory());
+							if(book.getPublisherName()!=null)
+								existingBook.setPublisherName(book.getPublisherName());
+							if(book.getSeries()!=null)
+								existingBook.setSeries(book.getSeries());
+							if(book.getTag()!=null)
+								existingBook.setTag(book.getTag());
+							if(book.getTotalPages()!=null)
+								existingBook.setTotalPages(book.getTotalPages());
+							if(book.getType()!=null)
+								existingBook.setType(book.getType());
+							if(book.getVersion()!=null)
+								existingBook.setVersion(book.getVersion());
+							if(book.getWritterName()!=null)
+								existingBook.setWritterName(book.getWritterName());
+						
+							EditableInfo editableInfo = existingBook.getEditableInfo();
+							editableInfo.setUpdatedAt();
+							editableInfo.setUpdatedBy("Super-Admin");
+							existingBook.setEditableInfo(editableInfo);
+							
+							return existingBook;
+						}
+					}
+				}
+			}catch (Exception e) {
+				String message = String.format("Error while validating Book for update.");
+				throw new BookException(message, e);
+			}
+			
+			return null;
+		}
 	}
 }

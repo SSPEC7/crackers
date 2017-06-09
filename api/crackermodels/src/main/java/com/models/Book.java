@@ -31,19 +31,11 @@ public class Book implements Serializable {
 	private String bookImage;
 	private String hashedBookImage;
 	private String bookCoverImage;
+	private String hashedBookCoverImage;
 	private Boolean isAvailable;
 	private Boolean isOffer;
 	private String tag;
 	private Account account;
-	
-	public Boolean getIsOffer() {
-		return isOffer;
-	}
-
-	public void setIsOffer(Boolean isOffer) {
-		this.isOffer = isOffer;
-	}
-
 	private EditableInfo editableInfo;
 	
 	public class Account{
@@ -86,6 +78,14 @@ public class Book implements Serializable {
 		}
 	}
 
+	public Boolean getIsOffer() {
+		return isOffer;
+	}
+
+	public void setIsOffer(Boolean isOffer) {
+		this.isOffer = isOffer;
+	}
+	
 	public String getBookName() {
 		return bookName;
 	}
@@ -228,5 +228,13 @@ public class Book implements Serializable {
 
 	public void setHashedBookImage(String hashedBookImage) {
 		this.hashedBookImage = hashedBookImage;
+	}
+
+	public String getHashedBookCoverImage() {
+		return hashedBookCoverImage;
+	}
+
+	public void setHashedBookCoverImage(String hashedBookCoverImage) {
+		this.hashedBookCoverImage = hashedBookCoverImage;
 	}
 }
