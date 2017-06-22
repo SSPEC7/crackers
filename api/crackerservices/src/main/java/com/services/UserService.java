@@ -21,7 +21,7 @@ public interface UserService {
 	
 	public List<User> getUsers(Sort sort);
 	
-	public User getUserById(Long userId);
+	public User getUserById(String userId);
 	
 	public User getUserByUserName(String userName);
 }

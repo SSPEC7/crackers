@@ -35,8 +35,6 @@ public class UserServiceImpl implements UserService {
 			
 			/*Create a new user*/
 			if(existedUser == null ){
-				long count = userRepository.count();
-				user.setId(count+1);
 				editableInfo = new EditableInfo();
 				editableInfo.setCreatedAt();
 				editableInfo.setUpdatedAt();
@@ -76,7 +74,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public User getUserById(Long userId) {
+	public User getUserById(String userId) {
 		
 		return userRepository.findOne(userId);
 	}

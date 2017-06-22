@@ -8,7 +8,7 @@ import com.models.User;
  * @author RITESH SINGH
  *
  */
-public interface UserRepository extends MongoRepository<User, Long> {
+public interface UserRepository extends MongoRepository<User, String> {
 
 	public User getUserByUserName(String userName);
 }

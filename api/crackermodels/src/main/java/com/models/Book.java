@@ -26,6 +26,9 @@ public class Book implements Serializable {
 	private String version;
 	private Long totalPages;
 	private String aboutBook;
+	private String university;
+	private String course;
+	private String semYear;
 	private String category;
 	private String type;
 	private String bookImage;
@@ -78,6 +81,30 @@ public class Book implements Serializable {
 		}
 	}
 
+	public String getUniversity() {
+		return university;
+	}
+
+	public void setUniversity(String university) {
+		this.university = university;
+	}
+
+	public String getCourse() {
+		return course;
+	}
+
+	public void setCourse(String course) {
+		this.course = course;
+	}
+
+	public String getSemYear() {
+		return semYear;
+	}
+
+	public void setSemYear(String semYear) {
+		this.semYear = semYear;
+	}
+	
 	public Boolean getIsOffer() {
 		return isOffer;
 	}

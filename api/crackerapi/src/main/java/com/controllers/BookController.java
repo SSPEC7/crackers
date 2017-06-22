@@ -35,6 +35,7 @@ import com.services.BookService;
 /**
  * @author RITESH SINGH
  * @since 2017-06-08
+ * @version	1.8
  */
 @Controller("bookController")
 @ComponentScan("com.services")

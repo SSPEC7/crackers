@@ -13,6 +13,7 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Repository;
 
+import com.models.Book;
 import com.models.User;
 
 /**
@@ -26,6 +27,9 @@ public class UserRepositoryImpl implements UserRepository {
 	@Qualifier("mongoTemplate")
 	private MongoTemplate mongoTemplate;
 	
+	@Autowired
+	private UserDao userDao;
+
 	@Override
 	public <S extends User> List<S> save(Iterable<S> entites) {
 		// TODO Auto-generated method stub
@@ -34,28 +38,23 @@ public class UserRepositoryImpl implements UserRepository {
 
 	@Override
 	public List<User> findAll() {
+		
 		try{
 			Query query = new Query();
 			query.with(new Sort(Sort.Direction.DESC, "_id"));
-	
 			List<User> users=  mongoTemplate.find(query, User.class);
-			
 			return users;
-			
 		}catch(Exception ee){}
-		
 		return null;
 	}
 
 	@Override
 	public List<User> findAll(Sort sort) {
+		
 		try{
 			Query query = new Query();
-			//query.with(new Sort(Sort.Direction.DESC, "_id"));
 			query.with(sort);
-	
 			List<User> users=  mongoTemplate.find(query, User.class);
-			
 			return users;
 		}catch(Exception ee){}
 		return null;
@@ -86,34 +85,55 @@ public class UserRepositoryImpl implements UserRepository {
 	}
 
 	@Override
-	public Page<User> findAll(Pageable arg0) {
-		// TODO Auto-generated method stub
-		return null;
+	public Page<User> findAll(Pageable pageable) {
+		
+		return userDao.findAll(pageable);
+	}
+
+	@Override
+	public <S extends User> S save(S entity) {
+		
+		return userDao.save(entity);
+	}
+
+	@Override
+	public User findOne(String id) {
+		
+		return userDao.findOne(id);
+	}
+
+	@Override
+	public boolean exists(String id) {
+		
+		return userDao.exists(id);
+	}
+
+	@Override
+	public Iterable<User> findAll(Iterable<String> ids) {
+		
+		return userDao.findAll(ids);
 	}
 
 	@Override
 	public long count() {
-		try{	
-			return mongoTemplate.count(new Query(), User.class);
-		}catch(Exception ee){}
 		
-		return 0;
+		return userDao.count();
 	}
 
 	@Override
-	public void delete(Long arg0) {
+	public void delete(String id) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void delete(User arg0) {
+	public void delete(User entity) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void delete(Iterable<? extends User> arg0) {
+	public void delete(Iterable<? extends User> entities) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -125,69 +145,32 @@ public class UserRepositoryImpl implements UserRepository {
 	}
 
 	@Override
-	public boolean exists(Long arg0) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public Iterable<User> findAll(Iterable<Long> arg0) {
+	public <S extends User> S findOne(Example<S> example) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public User findOne(Long arg0) {
-		return mongoTemplate.findById(arg0, User.class);
-	}
-	
-	@Override
-	public User getUserByUserName(String userName) {
-		
-		if(userName == null)
-			return null;
-		
-		Query query = new Query();
-		   query.addCriteria(Criteria.where("userName").is(userName));
-		try{
-			return mongoTemplate.findOne(query, User.class);
-		}catch(Exception ee){}
-		
+	public <S extends User> Page<S> findAll(Example<S> example, Pageable pageable) {
+		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public <S extends User> S save(S arg0) {
-		try{
-			mongoTemplate.save(arg0);
-		}catch(Exception ee){
-			
-		}
-		
-		return arg0;
-	}
-
-	@Override
-	public <S extends User> long count(Example<S> arg0) {
+	public <S extends User> long count(Example<S> example) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
-	public <S extends User> boolean exists(Example<S> arg0) {
+	public <S extends User> boolean exists(Example<S> example) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public <S extends User> Page<S> findAll(Example<S> arg0, Pageable arg1) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public <S extends User> S findOne(Example<S> arg0) {
-		// TODO Auto-generated method stub
-		return null;
+	public User getUserByUserName(String userName) {
+		
+		return userDao.findUserByUserName(userName);
 	}
 }
