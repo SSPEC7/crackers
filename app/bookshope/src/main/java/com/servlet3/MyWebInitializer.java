@@ -1,7 +1,6 @@
 package com.servlet3;
 
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
-
 import com.config.SpringWebConfig;
 
 /**
@@ -25,5 +24,4 @@ public class MyWebInitializer extends
 	protected Class<?>[] getRootConfigClasses() {
 		return new Class<?>[] {ApplicationConfig.class};
 	}
-
 }

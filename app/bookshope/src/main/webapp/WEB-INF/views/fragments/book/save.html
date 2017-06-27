@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head th:replace="component :: materialDashBoardCss"></head>
+	<body>
+		<div class="wrapper">
+		
+			<div th:replace="component :: materialDashBoardSideNav"></div>
+		
+		    <div class="main-panel">
+				
+				<nav th:replace="component :: materialDashBoardHeadNav" ></nav>
+		
+				<div class="content">
+					<div class="container-fluid">
+						<!-- Body Content Row -->
+						<div class="row">
+							<div class="col-md-12 col-lg-12">
+								hello
+							</div>
+						</div>
+					</div>
+				</div>
+				<footer th:replace="component :: materialDashBoardFooter" ></footer>
+			</div>
+		</div>
+	</body>
+	<div th:replace="component :: materialJs"></div>
+</html>
