@@ -41,6 +41,39 @@
 		<artifactId>jstl</artifactId>
 		<version>${jstl.version}</version>
 	</dependency>
+	<!-- Aerospike Client -->
+    <dependency>
+      <groupId>com.aerospike</groupId>
+      <artifactId>aerospike-client</artifactId>
+      <version>4.0.1</version>
+    </dependency>
+    
+    <dependency>
+	  <groupId>com.aerospike</groupId>
+	  <artifactId>spring-data-aerospike</artifactId>
+	  <version>1.0.2.RELEASE</version>
+	</dependency>	
+	
+	<dependency>
+	  <groupId>com.aerospike</groupId>
+	  <artifactId>aerospike-helper-java</artifactId>
+	  <version>1.2</version>
+	</dependency>
+	
+	<!--  End AS -->
+	
+	<!-- Redis Client -->
+	
+	<dependency>
+	    <groupId>org.springframework.data</groupId>
+	    <artifactId>spring-data-redis</artifactId>
+	    <version>1.6.2.RELEASE</version>
+	</dependency>
+	<dependency>
+	    <groupId>redis.clients</groupId>
+	    <artifactId>jedis</artifactId>
+	    <version>2.5.1</version>
+	</dependency>
 	
 	<dependency>
 			<groupId>org.thymeleaf</groupId>

@@ -1,6 +1,9 @@
 package com.servlet3;
 
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
+
+import com.config.AerospikeConfig;
+import com.config.RedisConfig;
 import com.config.SpringWebConfig;
 
 /**
@@ -12,7 +15,7 @@ public class MyWebInitializer extends
 
 	@Override
 	protected Class<?>[] getServletConfigClasses() {
-		return new Class[] { SpringWebConfig.class };
+		return new Class[] { SpringWebConfig.class, AerospikeConfig.class, RedisConfig.class };
 	}
 
 	@Override

@@ -1,11 +1,12 @@
 package com.controllers;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,12 +21,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.Utility;
+import com.aerospike.models.Person;
+import com.aerospike.services.PersonService;
 import com.google.gson.Gson;
 import com.models.User;
+import com.redis.Student;
+import com.redis.StudentRepository;
 import com.services.UserService;
 
 @Controller
-@ComponentScan("com.services")
+@ComponentScan("com.services,com.aerospike.services, com.redis")
 @RequestMapping(value = "admin")
 public class AdminController {
 
@@ -35,8 +40,47 @@ public class AdminController {
 	@Qualifier("userService")
 	private UserService userService;
 	
+	@Autowired
+	@Qualifier("studentRepository")
+	private StudentRepository studentRepository;
+	
+	@Autowired
+	@Qualifier("personService")
+	private PersonService personService;
+	
 	@RequestMapping(value = { "/login" }, method = RequestMethod.GET)
 	public ModelAndView formLogin() throws IOException {
+		
+		Person p = new Person();
+		
+		p.setAge(40);
+		p.setId("HAJK374GHPQ");
+		p.setEmail("ritesh@gmail.com");
+		p.setFirstname("RITESH");
+		p.setLastName("SINGH");
+		p.setCreatedAt(new Date());
+		
+		personService.save(p);
+		
+		Person pe = personService.findById("HAJK374GHPQ"); 
+		
+		System.out.println("hello"+pe.getId()+" "+pe.getAge());
+		
+		List<Person> ps1 = personService.findByFirstName("RITESH");
+		
+		List<Person> ps = personService.findByAgeBetween(10, 50);
+		
+		List<Person> psl = personService.findByLastName("SINGH");
+		
+		/*Student student = new Student();
+		student.setId("sdfhsdk");
+		student.setGrade(345);
+		student.setName("hello");
+		
+		studentRepository.save(student);*/
+		
+		//Student student = studentRepository.findStudent("sdfhsdk");
+		
 		
 		Map<String, Object> data = new HashMap<String, Object>();
 		data.put("content", "Woowwwww");
