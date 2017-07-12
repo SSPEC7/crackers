@@ -18,19 +18,14 @@ public class User implements Serializable {
 
 	@Id
 	private String id;
-	
 	private String firstName;
-	
 	private String lastName;
-
+	private String displayName;
 	private String userName;
-	
 	private String password;
-	
 	private String email;
 	
 	private Boolean isActive;
-	
 	private EditableInfo editableInfo;
 
 	public String getId() {
@@ -95,5 +90,13 @@ public class User implements Serializable {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+	
+	public String getDisplayName() {
+		return displayName;
+	}
+
+	public void setDisplayName(String displayName) {
+		this.displayName = displayName;
 	}
 }

@@ -58,9 +58,7 @@ public class BookAccountServiceImpl implements BookAccountService {
 			throw new BookException(message, e);
 		}
 		EditableInfo editableInfo = new EditableInfo();
-		editableInfo.setCreatedAt();
 		editableInfo.setCreatedBy("Super-Admin");
-		editableInfo.setUpdatedAt();
 		editableInfo.setUpdatedBy("Super-Admin");
 		bookAccount.setEditableInfo(editableInfo);
 		bookAccount.setIsActive(false);

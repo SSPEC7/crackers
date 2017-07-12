@@ -11,4 +11,5 @@ import com.models.User;
 public interface UserRepository extends MongoRepository<User, String> {
 
 	public User getUserByUserName(String userName);
+	public User getUserByEmail(String email);
 }

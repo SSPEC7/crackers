@@ -20,7 +20,7 @@ public class HelperUtility {
 	 * @author RITESH SINGH
 	 * @param page
 	 * @param size
-	 * @param sort
+	 * @param sort             attributeName,ASC/DSC
 	 * @param totalElements
 	 * @return
 	 */

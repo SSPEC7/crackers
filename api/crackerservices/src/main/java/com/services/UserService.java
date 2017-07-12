@@ -2,6 +2,8 @@ package com.services;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
 import com.models.User;
@@ -13,15 +15,17 @@ import com.models.User;
  */
 public interface UserService {
 
-	public User saveUser(User user);
+	User save(User user);
 	
-	public Long count();
+	Long count();
 	
-	public List<User> getUsers();
+	List<User> getUsers(Sort sort);
 	
-	public List<User> getUsers(Sort sort);
+	User getUserById(String userId);
 	
-	public User getUserById(String userId);
+	User getUserByUserName(String userName);
+
+	Page<User> getUsers(Pageable pageable);
 	
-	public User getUserByUserName(String userName);
+	List<User> getUsers();
 }

@@ -10,9 +10,14 @@ import java.util.stream.Stream;
  *
  */
 public class IgnoreAuthUrls {
+	
+	public static final String GET = "method:GET";
+	public static final String POST = "method:POST";
+	public static final String DELETE = "method:DELETE";
 
 	public static final List<String> URLS = Stream.of(
-										"/",
-										"/employee/get-employee"
+										"/"+GET,
+										"/user/"+GET,
+										"/auth/login"+POST
 										).collect(Collectors.toList());
 }

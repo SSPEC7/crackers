@@ -11,14 +11,16 @@ public class EditableInfo {
 	private long createdAt;
 	private String createdBy;
 	private long updatedAt;
+	
 	private String updatedBy;
+	
+	public EditableInfo(){
+		this.createdAt = Calendar.getInstance().getTimeInMillis();
+		this.updatedAt = this.createdAt;
+	}
 	
 	public long getCreatedAt() {
 		return createdAt;
-	}
-	public void setCreatedAt() {
-		long createdAt = Calendar.getInstance().getTimeInMillis();
-		this.createdAt = createdAt;
 	}
 	
 	public String getCreatedBy() {
@@ -30,10 +32,11 @@ public class EditableInfo {
 	public long getUpdatedAt() {
 		return updatedAt;
 	}
+	
 	public void setUpdatedAt() {
-		long updatedAt = Calendar.getInstance().getTimeInMillis();
-		this.updatedAt = updatedAt;
+		this.updatedAt = Calendar.getInstance().getTimeInMillis();
 	}
+	
 	public String getUpdatedBy() {
 		return updatedBy;
 	}

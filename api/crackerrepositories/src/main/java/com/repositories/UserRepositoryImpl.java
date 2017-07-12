@@ -13,6 +13,7 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Repository;
 
+import com.exception.BookException;
 import com.models.Book;
 import com.models.User;
 
@@ -44,8 +45,10 @@ public class UserRepositoryImpl implements UserRepository {
 			query.with(new Sort(Sort.Direction.DESC, "_id"));
 			List<User> users=  mongoTemplate.find(query, User.class);
 			return users;
-		}catch(Exception ee){}
-		return null;
+		}catch(Exception ee){
+			String message = "Error while fetching users @Repository";
+			throw new BookException(message,ee);
+		}
 	}
 
 	@Override
@@ -56,8 +59,10 @@ public class UserRepositoryImpl implements UserRepository {
 			query.with(sort);
 			List<User> users=  mongoTemplate.find(query, User.class);
 			return users;
-		}catch(Exception ee){}
-		return null;
+		}catch(Exception ee){
+			String message = "Error while fetching sorted users @Repository";
+			throw new BookException(message,ee);
+		}
 	}
 
 	@Override
@@ -86,38 +91,62 @@ public class UserRepositoryImpl implements UserRepository {
 
 	@Override
 	public Page<User> findAll(Pageable pageable) {
-		
-		return userDao.findAll(pageable);
+		try{
+			return userDao.findAll(pageable);
+		}catch(Exception ee){
+			String message = "Error while fetching pageable users @Repository";
+			throw new BookException(message,ee);
+		}
 	}
 
 	@Override
 	public <S extends User> S save(S entity) {
-		
-		return userDao.save(entity);
+		try{
+			return userDao.save(entity);
+		}catch(Exception ee){
+			String message = "Error while create user @Repository";
+			throw new BookException(message,ee);
+		}
 	}
 
 	@Override
 	public User findOne(String id) {
-		
-		return userDao.findOne(id);
+		try{
+			return userDao.findOne(id);
+		}catch(Exception ee){
+			String message = "Error while fetching user by id @Repository";
+			throw new BookException(message,ee);
+		}
 	}
 
 	@Override
 	public boolean exists(String id) {
-		
-		return userDao.exists(id);
+		try{
+			return userDao.exists(id);
+		}catch(Exception ee){
+			String message = "Error while checking user's existance @Repository";
+			throw new BookException(message,ee);
+		}
 	}
 
 	@Override
 	public Iterable<User> findAll(Iterable<String> ids) {
-		
-		return userDao.findAll(ids);
+		try{
+			return userDao.findAll(ids);
+		}catch(Exception ee){
+			String message = "Error fetching users by iterable ids @Repository";
+			throw new BookException(message,ee);
+		}
 	}
 
 	@Override
 	public long count() {
-		
-		return userDao.count();
+		try{
+			return userDao.count();
+		}catch(Exception ee){
+			String message = "Error count users @Repository";
+			throw new BookException(message,ee);
+		}
 	}
 
 	@Override
@@ -170,7 +199,22 @@ public class UserRepositoryImpl implements UserRepository {
 
 	@Override
 	public User getUserByUserName(String userName) {
-		
-		return userDao.findUserByUserName(userName);
+		try{
+			return userDao.findUserByUserName(userName);
+		}catch(Exception ee){
+			String message = "Error Fetched user by username @Repository";
+			throw new BookException(message,ee);
+		}
+	}
+
+	@Override
+	public User getUserByEmail(String email) {
+		try{
+			
+			return userDao.findUserByEmail(email);
+		}catch(Exception ee){
+			String message = "Error Fetched user by email @Repository";
+			throw new BookException(message,ee);
+		}
 	}
 }

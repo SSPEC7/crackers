@@ -14,8 +14,17 @@ import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.web.context.support.SpringBeanAutowiringSupport;
+
+import com.Constants;
 import com.Response;
 import com.google.gson.Gson;
+import com.services.AuthService;
 
 /**
  * This the Base Filter for every request
@@ -28,6 +37,8 @@ public class BaseFilter implements Filter {
 
 	private ServletContext context;
 
+	private TokenHandler tokenHandler;
+	
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -35,10 +46,15 @@ public class BaseFilter implements Filter {
 	 */
 	public void init(FilterConfig filterConfig) throws ServletException {
 		
+
+		ApplicationContext ctx = new AnnotationConfigApplicationContext(AuthHandler.class);   
+		this.tokenHandler = ctx.getBean(TokenHandlerImpl.class);
+		
 		this.context = filterConfig.getServletContext();
 		this.context.log("RequestLoggingFilter initialized");
+	    /*SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext(this);*/
 	}
-
+	
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -57,9 +73,13 @@ public class BaseFilter implements Filter {
 
 		String token = req.getHeader("X-AUTH-HEADER");
 		try {
-			if (isIgnoreUrlForAuth(request)) {
-				if (token.equals("RITESH9984")) {
-					writeBadCredantialToResponse(response);
+			
+			if (!isIgnoreUrlForAuth(request)) {
+				if(tokenHandler.isTokenExpired(token) == Constants.EXPIRED_TOKEN){
+					writeExpiredTokenToResponse(response);
+					return;
+				} else if (tokenHandler.isTokenExpired(token) == Constants.BAD_TOKEN) {
+					writeBadTokenToResponse(response);
 					return;
 				}
 			}
@@ -103,7 +123,23 @@ public class BaseFilter implements Filter {
 	 * @param servletResponse
 	 * @throws IOException
 	 */
-	private void writeBadCredantialToResponse(ServletResponse servletResponse) throws IOException {
+	private void writeBadTokenToResponse(ServletResponse servletResponse) throws IOException {
+		Response response = new Response();
+		response.setStatus(302);
+		response.setStatusDescription("Token has not been existed.");
+		try (PrintWriter writer = servletResponse.getWriter()) {
+			writer.write(new Gson().toJson(response));
+			writer.flush();
+		}
+	}
+	
+	/**
+	 * If token expired then this method will generate response
+	 * 
+	 * @param servletResponse
+	 * @throws IOException
+	 */
+	private void writeExpiredTokenToResponse(ServletResponse servletResponse) throws IOException {
 		Response response = new Response();
 		response.setStatus(302);
 		response.setStatusDescription("Token has been expired.");
@@ -136,7 +172,8 @@ public class BaseFilter implements Filter {
 				String requestedCompleteUrl = req.getRequestURL().toString();
 				int i = requestedCompleteUrl.indexOf(appName) + appName.length();
 				String requestedAppUrl = requestedCompleteUrl.substring(i);
-				return requestedAppUrl;
+				
+				return requestedAppUrl+"method:"+req.getMethod();
 			}
 
 			/**

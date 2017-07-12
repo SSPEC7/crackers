@@ -142,9 +142,7 @@ public class BookServiceImpl implements BookService {
 					book.setIsAvailable(false);
 					book.setIsOffer(false);
 					EditableInfo editableInfo = new EditableInfo();
-					editableInfo.setCreatedAt();
 					editableInfo.setCreatedBy("Super-Admin");
-					editableInfo.setUpdatedAt();
 					editableInfo.setUpdatedBy("Super-Admin");
 					book.setEditableInfo(editableInfo);
 					
