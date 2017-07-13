@@ -45,14 +45,11 @@ public class BaseFilter implements Filter {
 	 * @see javax.servlet.Filter#init(javax.servlet.FilterConfig)
 	 */
 	public void init(FilterConfig filterConfig) throws ServletException {
-		
 
 		ApplicationContext ctx = new AnnotationConfigApplicationContext(AuthHandler.class);   
 		this.tokenHandler = ctx.getBean(TokenHandlerImpl.class);
-		
 		this.context = filterConfig.getServletContext();
 		this.context.log("RequestLoggingFilter initialized");
-	    /*SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext(this);*/
 	}
 	
 	/*

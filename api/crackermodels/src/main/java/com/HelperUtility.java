@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
+import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -71,5 +73,11 @@ public class HelperUtility {
 		if(data!=null)
 			data.put("totalElements", list!=null ? list.size() : 0);
 		return data;
+	}
+	
+	public static String getToken(String key) {
+	    String ts = String.valueOf(System.currentTimeMillis());
+	    String rand = UUID.randomUUID().toString();
+	    return DigestUtils.sha512Hex(ts + rand + key);
 	}
 }

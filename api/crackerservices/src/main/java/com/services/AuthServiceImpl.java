@@ -56,22 +56,7 @@ public class AuthServiceImpl implements AuthService {
 			throw new BookException(message, e);
 		}
 	}
-
-	@Override
-	public int isTokenExpired(String token) {
-		try{
-			if(token!=null){
-				UserLog userLog = userLogRepository.findUserLogByToken(token);
-				if(userLog!=null){
-					return userLog.tokenStatus();
-				}
-			}
-			return Constants.BAD_TOKEN;
-		}catch(Exception e){
-			String message = String.format("Error while checking isTokenExpired.");
-			throw new BookException(message, e);
-		}
-	}
+	
 	
 	@Override
 	public Boolean loggedOut(String token) {

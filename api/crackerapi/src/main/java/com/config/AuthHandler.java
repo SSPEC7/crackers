@@ -13,6 +13,7 @@ import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
+import com.mongodb.DBObject;
 import com.mongodb.MongoClient;
 
 @Configuration
@@ -51,6 +52,9 @@ class TokenHandlerImpl implements TokenHandler {
 				UserLog userLog = this.getUserByToken(token);
 				
 				if(userLog!=null){
+					if(userLog.tokenStatus() == Constants.EXPIRED_TOKEN){
+						this.updateTokenExpireStatus(userLog);
+					}
 					return userLog.tokenStatus();
 				}
 			}
@@ -61,24 +65,38 @@ class TokenHandlerImpl implements TokenHandler {
 		}
 	}
 	
-	private UserLog getUserByToken(String token){
+	private void updateTokenExpireStatus(UserLog log){
 		try{
-			
-			Gson gson = new Gson();
-			UserLog userLog = null;
-			BasicDBObject query = new BasicDBObject("token", token);
-			DBCursor cursor = this.collection.find(query);
-			Object data = null;
-			try{
-			while(cursor.hasNext()) {
-				data = cursor.next();
-			   }
-			}finally{
-				cursor.close();
+		
+			if(log!=null && !log.getIsExpired()){
+				BasicDBObject searchObject = new BasicDBObject();
+				searchObject.put("token", log.getToken());
+				
+				DBObject updatedObject =  this.collection.find(searchObject).toArray().get(0);
+				updatedObject.put("isExpired", true);
+				updatedObject.put("expiredType", Constants.TIMESTAMP_TOEKN_EPIRE_TYPE);
+				this.collection.findAndModify(searchObject, updatedObject);
 			}
+		}catch(Exception ee){
+			String message = String.format("Error while updating token epired @timestamp @TokenHandler.");
+			throw new BookException(message, ee);
+		}
+	}
+	
+	private UserLog getUserByToken(String token){
+		
+		UserLog userLog = null;
+		try{
+			BasicDBObject dbObject = new BasicDBObject();
+			dbObject.put("token", token);
+			DBObject newObject =  this.collection.find(dbObject).toArray().get(0);
+			Gson gson = new Gson();
 			
-			if(data!=null){
-				userLog = gson.fromJson(gson.toJson(data), UserLog.class);
+			try{
+				userLog = gson.fromJson(gson.toJson(newObject), UserLog.class);
+			}catch(Exception ee){
+				String message = String.format("Error while parsing json into UserLog class in get userLog by token @TokenHandler.");
+				throw new BookException(message, ee);
 			}
 			
 			return userLog;

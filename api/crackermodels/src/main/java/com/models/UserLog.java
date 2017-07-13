@@ -7,6 +7,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import com.Constants;
+import com.HelperUtility;
 import com.exception.BookException;
 
 /**
@@ -50,7 +51,7 @@ public class UserLog implements Serializable {
 		
 		this.userName = user.getUserName();
 		this.email = user.getEmail();
-		this.token = generateToken();
+		this.token = HelperUtility.getToken(this.userName);
 	}
 	
 	public String getId() {
@@ -111,14 +112,6 @@ public class UserLog implements Serializable {
 
 	public void setExpiredType(int expiredType) {
 		this.expiredType = expiredType;
-	}
-	
-	private String generateToken(){
-		try{
-			return "ritesh9984";
-		}catch(BookException ee){
-			throw ee;
-		}
 	}
 
 	public String getPassword() {
