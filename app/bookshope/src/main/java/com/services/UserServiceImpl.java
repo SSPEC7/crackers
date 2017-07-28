@@ -10,24 +10,31 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.Response;
-import com.controllers.AdminController;
 import com.dao.DataAccessObject;
 import com.google.gson.Gson;
 import com.models.User;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Service("userService")
 public class UserServiceImpl extends DataAccessObject implements UserService {
 
 	final static Logger logger = Logger.getLogger(UserServiceImpl.class);
 	
-	@Value("${user.api}")
-	private String userApi;
-	
 	@Value("${ip}")
 	private String ip;
 	
 	@Value("${port}")
 	private String port;
+	
+	@Value("${api}")
+	private String api;
+	
+	@Value("${user.api}")
+	private String userApi;
+	
+	@Value("${login}")
+	private String login;
 	
 	@Override
 	public void save(User user) throws IOException {
@@ -115,22 +122,32 @@ public class UserServiceImpl extends DataAccessObject implements UserService {
 	}
 
 	@Override
-	public boolean setLoggedIn(User user) throws IOException {
+	public User setLoggedIn(User user) throws IOException {
+		
+		String url = this.ip+this.port+this.api+this.login;
+		ObjectMapper mapper = new ObjectMapper();
+		
+		Gson gson = new Gson();
+		if(user == null || user.getUserName() == null)
+			return null;
+			
 		try{
-			if(user != null){
-				user = getUserByUserName(user);
-				if(user != null){
-					user.setIsActive(true);
-					save(user);
-					logger.info("user loggedIn successfully.");
-					return true;
-				}
+			Map<String, String> header = new HashMap<String, String>();
+
+			Response apiResponse = gson.fromJson(sendPOST(url,gson.toJson(user),  header), Response.class); 
+			System.out.println("apiResponse = "+new Gson().toJson(apiResponse));
+			
+			if(apiResponse.getStatus() ==200){
+				user = mapper.readValue(gson.toJson(apiResponse.getData()), User.class);
+				logger.info("fetched user by userName successfully.");
+
+				return user;
 			}
 		}catch(Exception ee){
-			logger.error("error while user loggedIn.");
+			logger.error("error while login user.");
 		}
-		logger.info("requested user for loggedIn not found.");
-		return false;
+		return user;
+		
 	}
 	
 	@Override

@@ -17,7 +17,6 @@ public class AerospikeConfig {
         ClientPolicy policy = new ClientPolicy();
         policy.failIfNotConnected = true;
         policy.timeout = 2000;
-        
         AerospikeClient ac = new AerospikeClient(policy,"127.0.0.1", 3000);
         
         return ac;

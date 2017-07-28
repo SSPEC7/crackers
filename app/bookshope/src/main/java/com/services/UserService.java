@@ -17,5 +17,5 @@ public interface UserService {
 
 	boolean setLoggedOut(User user) throws IOException;
 
-	boolean setLoggedIn(User user) throws IOException;
+	User setLoggedIn(User user) throws IOException;
 }

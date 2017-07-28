@@ -4,15 +4,34 @@ import java.util.Date;
 
 import org.springframework.data.annotation.Id;
 
+import com.models.User;
+
 public class UserCredential {
 
 	@Id
 	private String id;
 	private String userName;
+	private String userDisplayName;
     private String email;
     private String token;
     private Boolean tokenStatus;
     private Date createdAt;
+    
+    public UserCredential(){}
+    
+    public UserCredential(User user){
+    	if(user!=null){
+    		this.id = user.getId();
+    		this.userName = user.getUserName();
+    		this.userDisplayName = user.getFirstName()+" "+user.getLastName();
+    		this.email = user.getEmail();
+    		this.token = user.getToken();
+    		this.tokenStatus = !user.getIsTokenExpired();
+    		Date d = new Date();
+    		d.setTime(user.getTokenCreatedAt());
+    		this.createdAt = d;
+    	}
+    }
     
 	public String getId() {
 		return id;
@@ -49,5 +68,13 @@ public class UserCredential {
 	}
 	public void setCreatedAt(Date createdAt) {
 		this.createdAt = createdAt;
+	}
+
+	public String getUserDisplayName() {
+		return userDisplayName;
+	}
+
+	public void setUserDisplayName(String userDisplayName) {
+		this.userDisplayName = userDisplayName;
 	}
 }

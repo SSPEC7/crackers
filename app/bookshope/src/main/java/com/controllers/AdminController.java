@@ -1,9 +1,7 @@
 package com.controllers;
 
 import java.io.IOException;
-import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -21,12 +19,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.Utility;
-import com.aerospike.models.Person;
-import com.aerospike.services.PersonService;
+import com.aerospike.services.UserCredentialService;
 import com.google.gson.Gson;
 import com.models.User;
-import com.redis.Student;
-import com.redis.StudentRepository;
 import com.services.UserService;
 
 @Controller
@@ -41,8 +36,8 @@ public class AdminController {
 	private UserService userService;
 	
 	@Autowired
-	@Qualifier("studentRepository")
-	private StudentRepository studentRepository;
+	@Qualifier("userCredentialService")
+	private UserCredentialService userCredentialService;
 	
 	@RequestMapping(value = { "/login" }, method = RequestMethod.GET)
 	public ModelAndView formLogin() throws IOException {
@@ -58,12 +53,15 @@ public class AdminController {
 			HttpServletRequest request) throws Exception {
 		System.out.println("Student Details : " + new Gson().toJson(user));
 		try {
-			userService.setLoggedIn(user);
+			user = userService.setLoggedIn(user);
+			System.out.println("Token Length: "+user.getToken().length());
 		} catch (Exception ex) {
 			logger.fatal("error while request user for login.");
 		}
-		if(userService.isLoggedIn(user)){
+		
+		if(user !=null && !user.getIsTokenExpired()){
 			logger.info("Accessed dashboard after user login.");
+			userCredentialService.save(user.getUserCredential());
 			return Utility.setView(user.getUserName(), null, "trends/dashboard");
 		}
 		logger.info("failed user login bad credential.");
