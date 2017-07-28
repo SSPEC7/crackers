@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Service;
 
-import com.Constants;
 import com.exception.BookException;
 import com.models.User;
 import com.models.UserLog;
@@ -33,6 +32,7 @@ public class AuthServiceImpl implements AuthService {
 		validateUserCredentialForLogin(userCredential);
 		UserLog userLog = null;
 		try{
+			
 			User user = userRepository.getUserByUserName(userCredential.getUserName());
 			if(user!=null)
 				if(userCredential.getPassword().equals(user.getPassword())){
@@ -56,7 +56,6 @@ public class AuthServiceImpl implements AuthService {
 			throw new BookException(message, e);
 		}
 	}
-	
 	
 	@Override
 	public Boolean loggedOut(String token) {

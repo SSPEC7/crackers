@@ -57,7 +57,7 @@ public class BookController {
 	 * @throws UnknownHostException
 	 */
 	@CrossOrigin
-	@RequestMapping(value = "/", method = RequestMethod.POST)
+	@RequestMapping(value = "", method = RequestMethod.POST)
 	public @ResponseBody ResponseEntity<Response> saveBook(
 			@RequestParam(value = "bookString")  String bookString,
 			@RequestParam(value = "logo", required = false) MultipartFile logo,
@@ -138,7 +138,7 @@ public class BookController {
 	 * @throws UnknownHostException
 	 */
 	@CrossOrigin
-	@RequestMapping(value = "/", method = RequestMethod.GET, consumes = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "", method = RequestMethod.GET, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody ResponseEntity<Response> getBooks(
 			@RequestParam(value = "q", required = false) String query,
 			@RequestParam(value = "page", required = false) Integer page,

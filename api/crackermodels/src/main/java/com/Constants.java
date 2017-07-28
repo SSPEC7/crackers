@@ -2,7 +2,7 @@ package com;
 
 public class Constants {
 
-	public static final long TOKEN_LIFE = 1000*60*1;
+	public static final long TOKEN_LIFE = 1000*60*3;
 	
 	public static final String FOLDER_BOOK = "book";
 	public static final int BAD_TOKEN = -1;
