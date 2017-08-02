@@ -173,4 +173,9 @@ public class User implements Serializable {
 		UserCredential userCredential = new UserCredential(this);
 		return userCredential;
 	}
+	
+	public com.redis.UserCredential getRedisUserCredential(){
+		com.redis.UserCredential userCredential = new com.redis.UserCredential(this);
+		return userCredential;
+	}
 }

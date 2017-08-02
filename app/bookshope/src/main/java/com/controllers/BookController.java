@@ -11,6 +11,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -27,13 +28,15 @@ public class BookController {
 	
 	final static Logger logger = Logger.getLogger(BookController.class);
 	
-	@RequestMapping(value = { "/" }, method = RequestMethod.GET)
-	public ModelAndView formLogin() throws IOException {
+	@RequestMapping(value = { "/{userName}/book-upload" }, method = RequestMethod.GET)
+	public ModelAndView formLogin(@PathVariable("userName") String userName) throws IOException {
 		
 		Map<String, Object> data = new HashMap<String, Object>();
 		data.put("content", "Woowwwww");
 		logger.info("Accessed book-list.");
-		return Utility.setView("userName", data, "book/save");
+		
+		Utility.getViewResolver(data, "book/save", "save");
+		return Utility.setView(userName, data, "home");
 	}
 	
 	@RequestMapping(value = { "/save" }, method = RequestMethod.POST)
@@ -41,7 +44,14 @@ public class BookController {
 			HttpServletRequest request) throws Exception {
 		System.out.println("Student Details : " + new Gson().toJson(book));
 		
+		Map<String, Object> data = new HashMap<String, Object>();
+		data.put("content", "Woowwwww");
+		logger.info("Accessed book-list.");
+		
+		Utility.getViewResolver(data, "book/save", "save");
+		return Utility.setView(book.getEditableInfo().getCreatedBy(), data, "home");
+		/*
 		logger.info("failed user login bad credential.");
-		return Utility.setView(null, null, "admin/404");
+		return Utility.setView(null, null, "admin/404");*/
 	}
 }

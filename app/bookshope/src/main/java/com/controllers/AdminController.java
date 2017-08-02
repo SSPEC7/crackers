@@ -19,13 +19,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.Utility;
-import com.aerospike.services.UserCredentialService;
 import com.google.gson.Gson;
 import com.models.User;
+import com.redis.StudentRepository;
+import com.redis.UserCredentialRepository;
 import com.services.UserService;
 
 @Controller
-@ComponentScan("com.services,com.aerospike.services")
+@ComponentScan("com.services, com.redis")
 @RequestMapping(value = "admin")
 public class AdminController {
 
@@ -36,8 +37,12 @@ public class AdminController {
 	private UserService userService;
 	
 	@Autowired
-	@Qualifier("userCredentialService")
-	private UserCredentialService userCredentialService;
+	@Qualifier("userCredentialRepository")
+	private UserCredentialRepository userCredentialRepository;
+	
+	/*@Autowired
+	@Qualifier("studentRepository")
+	private StudentRepository studentRepository;*/
 	
 	@RequestMapping(value = { "/login" }, method = RequestMethod.GET)
 	public ModelAndView formLogin() throws IOException {
@@ -61,8 +66,11 @@ public class AdminController {
 		
 		if(user !=null && !user.getIsTokenExpired()){
 			logger.info("Accessed dashboard after user login.");
-			userCredentialService.save(user.getUserCredential());
-			return Utility.setView(user.getUserName(), null, "trends/dashboard");
+			userCredentialRepository.save(user.getRedisUserCredential());
+			
+			Map<String,Object> data = new HashMap<String,Object>();
+			Utility.getViewResolver(data, "book/save", "save");
+			return Utility.setView(user.getUserName(), data, "home");
 		}
 		logger.info("failed user login bad credential.");
 		return Utility.setView(null, null, "admin/404");

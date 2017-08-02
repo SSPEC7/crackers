@@ -1,4 +1,4 @@
-package com.aerospike.models;
+package com.redis;
 
 import java.util.Date;
 

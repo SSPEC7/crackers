@@ -21,10 +21,10 @@ public class UserCredentialServiceImpl implements UserCredentialService {
 	@Override
 	public void save(UserCredential userCredential) {
 		try{
-			userCredentialRepository.createIndex(UserCredential.class, "UserCredential_userName_index", "userName", IndexType.STRING);
+			/*userCredentialRepository.createIndex(UserCredential.class, "UserCredential_userName_index", "userName", IndexType.STRING);
 			userCredentialRepository.createIndex(UserCredential.class, "UserCredential_email_index", "email", IndexType.STRING);
 			userCredentialRepository.createIndex(UserCredential.class, "UserCredential_token_index", "token", IndexType.STRING);
-		
+		*/
 			userCredentialRepository.save(userCredential);
 		}catch(AerospikeError e){
 			logger.fatal("error while save user credential in aerospike.");

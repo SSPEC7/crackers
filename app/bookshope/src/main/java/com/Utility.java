@@ -15,4 +15,9 @@ public class Utility {
 		data.put("numberFormatter", numberFormatter);
 		return new ModelAndView(viewPage, "data", data);
 	}
+	
+	public static void getViewResolver(Map<String, Object> data,String path,String fragment){
+		data.put("path", path);
+		data.put("fragment", fragment);
+	}
 }

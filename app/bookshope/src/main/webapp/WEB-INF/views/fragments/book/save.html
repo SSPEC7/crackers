@@ -1,119 +1,100 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head th:replace="component :: materialDashBoardCss"></head>
-	<body>
-		<div class="wrapper">
-		
-			<div th:replace="component :: materialDashBoardSideNav"></div>
-		
-		    <div class="main-panel">
-				
-				<nav th:replace="component :: materialDashBoardHeadNav" ></nav>
-		
-				<div class="content">
-					<div class="container-fluid">
-						<!-- Body Content Row -->
-						<form method="post" action="">
+<div th:fragment="save" class="container-fluid">
+	<!-- Body Content Row -->
+	<form method="post" action="#" th:action="@{/user/save}">
+		<div class="row">
+			<div class="col-md-12 col-lg-12">
+				<div class="card">
+					<div class="card-header" data-background-color="orange">
+						<h4 class="title">Book Save</h4>
+						<p class="category">New books upload</p>
+					</div>
+					<div class="card-content table-responsive">
+						<div class="row">
+							<div class="col-md-6 col-lg-6">
+								<div class="row">
+									<div class="col-md-6 col-lg-6">
+										<div class="form-group label-floating">
+											<label class="control-label">Book Code</label> <input
+												type="text" class="form-control" />
+										</div>
+									</div>
+									<div class="col-md-6 col-lg-6">
+										<div class="form-group label-floating">
+											<label class="control-label">Book Name</label> <input
+												type="text" class="form-control" />
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-6 col-lg-6">
+										<div class="form-group label-floating">
+											<label class="control-label">Writer Name</label> <input
+												type="text" class="form-control" />
+										</div>
+									</div>
+									<div class="col-md-6 col-lg-6">
+										<div class="form-group label-floating">
+											<label class="control-label">Publisher Name</label> <input
+												type="text" class="form-control" />
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-6 col-lg-6">
+										<div class="form-group label-floating">
+											<label class="control-label">Series</label> <input
+												type="text" class="form-control" />
+										</div>
+									</div>
+									<div class="col-md-6 col-lg-6">
+										<div class="form-group label-floating">
+											<label class="control-label">Version</label> <input
+												type="text" class="form-control" />
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-6 col-lg-6">
+										<div class="form-group label-floating">
+											<label class="control-label">University</label> <input
+												type="text" class="form-control" />
+										</div>
+									</div>
+									<div class="col-md-6 col-lg-6">
+										<div class="form-group label-floating">
+											<label class="control-label">Course</label> <input
+												type="text" class="form-control" />
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-6 col-lg-6">
+										<div class="form-group label-floating">
+											<label class="control-label">Sem/Year</label> <input
+												type="text" class="form-control" />
+										</div>
+									</div>
+									<div class="col-md-6 col-lg-6">
+										<div class="form-group label-floating">
+											<label class="control-label">Category</label> <input
+												type="text" class="form-control" />
+												
+											<input th:text="${data.userName}"
+												type="hidden" name="editableInfo.createdBy" class="form-control" />	
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-6 col-lg-6"></div>
+						</div>
 						<div class="row">
 							<div class="col-md-12 col-lg-12">
-								<div class="card">
-		                            <div class="card-header" data-background-color="orange">
-		                                <h4 class="title">Book Save</h4>
-		                                <p class="category">New books upload</p>
-		                            </div>
-		                            <div class="card-content table-responsive">
-		                                <div class="row">
-		                                	<div class="col-md-6 col-lg-6">
-		                                		<div class="row">
-		                                			<div class="col-md-6 col-lg-6">
-		                                				<div class="form-group label-floating">
-															<label class="control-label">Book Code</label>
-															<input type="text" class="form-control">
-														</div>
-		                                			</div>
-		                                			<div class="col-md-6 col-lg-6">
-		                                				<div class="form-group label-floating">
-															<label class="control-label">Book Name</label>
-															<input type="text" class="form-control">
-														</div>
-		                                			</div>
-		                                		</div>
-		                                		<div class="row">
-		                                			<div class="col-md-6 col-lg-6">
-		                                				<div class="form-group label-floating">
-															<label class="control-label">Writer Name</label>
-															<input type="text" class="form-control">
-														</div>
-		                                			</div>
-		                                			<div class="col-md-6 col-lg-6">
-		                                				<div class="form-group label-floating">
-															<label class="control-label">Publisher Name</label>
-															<input type="text" class="form-control">
-														</div>
-		                                			</div>
-		                                		</div>
-		                                		<div class="row">
-		                                			<div class="col-md-6 col-lg-6">
-		                                				<div class="form-group label-floating">
-															<label class="control-label">Series</label>
-															<input type="text" class="form-control">
-														</div>
-		                                			</div>
-		                                			<div class="col-md-6 col-lg-6">
-		                                				<div class="form-group label-floating">
-															<label class="control-label">Version</label>
-															<input type="text" class="form-control">
-														</div>
-		                                			</div>
-		                                		</div>
-		                                		<div class="row">
-		                                			<div class="col-md-6 col-lg-6">
-		                                				<div class="form-group label-floating">
-															<label class="control-label">University</label>
-															<input type="text" class="form-control">
-														</div>
-		                                			</div>
-		                                			<div class="col-md-6 col-lg-6">
-		                                				<div class="form-group label-floating">
-															<label class="control-label">Course</label>
-															<input type="text" class="form-control">
-														</div>
-		                                			</div>
-		                                		</div>
-		                                		<div class="row">
-		                                			<div class="col-md-6 col-lg-6">
-		                                				<div class="form-group label-floating">
-															<label class="control-label">Sem/Year</label>
-															<input type="text" class="form-control">
-														</div>
-		                                			</div>
-		                                			<div class="col-md-6 col-lg-6">
-		                                				<div class="form-group label-floating">
-															<label class="control-label">Category</label>
-															<input type="text" class="form-control">
-														</div>
-		                                			</div>
-		                                		</div>
-		                                	</div>
-		                                	<div class="col-md-6 col-lg-6">
-		                                		
-		                                	</div>
-		                                </div>
-		                                <div class="row">
-		                                	<div class="col-md-12 col-lg-12">
-		                                		<button class="btn btn-success">Save</button>
-		                                	</div>
-		                                </div>
-		                            </div>
-		                        </div>
+								<button class="btn btn-success">Save</button>
 							</div>
 						</div>
-						</form>
 					</div>
 				</div>
-				<footer th:replace="component :: materialDashBoardFooter" ></footer>
 			</div>
 		</div>
-	</body>
-	<div th:replace="component :: materialJs"></div>
-</html>
+	</form>
+</div>
